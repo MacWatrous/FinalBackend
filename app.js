@@ -60,6 +60,8 @@ app.get('/notes', function(req, res) {
 app.get('/users/:id', function (req, res, next) {
     var id = req.params.id;
     connection.connect();
-    connection.query('SHOW VARIABLES LIKE "%version%";');
+    connection.query('SHOW VARIABLES LIKE "%version%";', function(err,rows,fields){
+        console.log(rows[0]);
+    });
     connection.end();
 });
