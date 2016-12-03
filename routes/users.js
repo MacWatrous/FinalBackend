@@ -23,6 +23,7 @@ router.get('/:id', function(req, res, next) {
         console.log(id);
     });
     connection.end();
+    res.send(id + " : " + dbURL);
     next();
 });
 
