@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var mysql = require('mysql');
-var dbURL = process.env.CLEARDB_DATABASE_URL;
 var connection = mysql.createConnection({
-    host     : dbURL,
+    host     : 'us-cdbr-iron-east-04.cleardb.net',
     user     : 'b2f823031ac8aa',
     password : '7231b3d0',
     database : 'heroku_3841ee16ff9e842'
@@ -21,6 +20,7 @@ router.get('/:id', function(req, res, next) {
     connection.query('SHOW VARIABLES LIKE "%version%";', function(err,rows,fields){
         console.log(dbURL);
         console.log(id);
+        console.log(rows[0].Variable_name);
     });
     connection.end();
     res.send(id + " : " + dbURL);
