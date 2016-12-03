@@ -18,9 +18,9 @@ router.get('/:id', function(req, res, next) {
     var id = req.params.id;
     connection.connect();
     connection.query('SHOW VARIABLES LIKE "%version%";', function(err,rows,fields){
-        console.log(id);
-        console.log(rows[1].Variable_name);
     });
+    console.log(id);
+    console.log(rows[1].Variable_name);
     connection.end();
     res.send(id);
     next();
