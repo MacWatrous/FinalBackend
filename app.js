@@ -8,6 +8,15 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+var mysql      = require('mysql');
+var dbURL = process.env.CLEARDB_DATABASE_URL;
+var connection = mysql.createConnection({
+    host     : dbURL,
+    user     : 'b2f823031ac8aa',
+    password : '7231b3d0',
+    database : 'heroku_3841ee16ff9e842'
+});
+
 var app = express();
 
 // view engine setup
@@ -47,4 +56,10 @@ module.exports = app;
 
 app.get('/notes', function(req, res) {
 	res.json({notes: "This is your notebook. Edit this to start saving your notes!"})
-})
+});
+app.get('/users/:id', function (req, res, next) {
+    var id = req.params.id;
+    connection.connect();
+    connection.query('SHOW VARIABLES LIKE "%version%";');
+    connection.end();
+});
