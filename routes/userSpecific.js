@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 });
 
 /* GET users listing. */
-router.get('/:id', function(req, res, next) {
+router.get('/', function(req, res, next) {
     var id = req.params.id;
     connection.connect();
     connection.query('SHOW VARIABLES LIKE "%version%";', function(err,rows,fields){
