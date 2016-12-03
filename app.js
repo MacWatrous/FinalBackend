@@ -7,15 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
-var mysql      = require('mysql');
-var dbURL = process.env.CLEARDB_DATABASE_URL;
-var connection = mysql.createConnection({
-    host     : dbURL,
-    user     : 'b2f823031ac8aa',
-    password : '7231b3d0',
-    database : 'heroku_3841ee16ff9e842'
-});
+var userSpecific = require('./routes/userSpecific');
 
 var app = express();
 
@@ -33,8 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/users/:id', specificUser);
-app.use('/notes', notes);
+app.use('/users/:id', userSpecific);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,15 +46,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-app.get('/notes', function(req, res) {
-	res.json({notes: "This is your notebook. Edit this to start saving your notes!"})
-});
-app.get('/users/:id', function (req, res, next) {
-    var id = req.params.id;
-    connection.connect();
-    connection.query('SHOW VARIABLES LIKE "%version%";', function(err,rows,fields){
-        console.log(rows[0]);
-    });
-    connection.end();
-});
