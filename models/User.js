@@ -16,7 +16,7 @@ var User = Waterline.Collection.extend({
 
         username: {
             type: 'string',
-            required: true,
+            required: true
         },
 
         cash: {
