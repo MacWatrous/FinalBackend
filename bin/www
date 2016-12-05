@@ -25,6 +25,8 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+delete process.env.NODE_ENV;
+
 models.waterline.initialize(models.config, function(err, models) {
     if (err) throw err;
     // console.log(models.collections);
