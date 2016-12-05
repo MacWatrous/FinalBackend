@@ -19,6 +19,10 @@ var config = {
             password: '7231b3d0',
             database: 'heroku_3841ee16ff9e842'
         }
+    },
+
+    defaults: {
+        migrate: 'alter'
     }
 };
 
