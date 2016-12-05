@@ -1,7 +1,7 @@
 /**
  * Created by mac on 12/5/16.
  */
-var Waterline = require('Waterline');
+var Waterline = require('waterline');
 
 var Stocks = Waterline.Collection.extend({
     identity: 'stocks',

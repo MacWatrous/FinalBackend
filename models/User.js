@@ -1,7 +1,7 @@
 /**
  * Created by mac on 12/5/16.
  */
-var Waterline = require('Waterline');
+var Waterline = require('waterline');
 
 var User = Waterline.Collection.extend({
     identity: 'user',
