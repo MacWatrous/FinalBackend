@@ -9,7 +9,7 @@ var User = Waterline.Collection.extend({
 
     attributes: {
         id: {
-            type: 'int',
+            type: 'integer',
             required: true,
             unique: true
         },

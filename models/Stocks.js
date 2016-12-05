@@ -9,7 +9,7 @@ var Stocks = Waterline.Collection.extend({
 
     attributes: {
         id: {
-            type: 'int',
+            type: 'integer',
             required: true,
             unique: true
         },
@@ -26,7 +26,7 @@ var Stocks = Waterline.Collection.extend({
             required: true
         },
         purchaseAmount: {
-            type: 'int',
+            type: 'integer',
             required: true
         }
     }
