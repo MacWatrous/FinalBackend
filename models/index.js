@@ -20,7 +20,6 @@ var config = {
             database: 'heroku_3841ee16ff9e842'
         }
     },
-    migrate: 'alter',
     defaults: {
         migrate: 'alter'
     }
