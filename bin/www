@@ -29,7 +29,7 @@ delete process.env.NODE_ENV;
 
 models.waterline.initialize(models.config, function(err, models) {
     if (err) throw err;
-    // console.log(models.collections);
+    console.log(models.collections);
     app.models = models.collections;
     app.connections = models.connections;
 
