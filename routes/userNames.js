@@ -8,13 +8,13 @@ var models = require('../models');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    res.send('respond with a resource');
 });
 
-router.get('/:id', function(req, res, next) {
-    var id = req.params.id;
+router.get('/:username', function(req, res, next) {
+    var username = req.params.username;
     //console.log(req.app.models);
-    req.app.models.user.findOneById(id).exec(function (err, find){
+    req.app.models.user.findOneByUsername(username).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find user.'});
         }
@@ -22,13 +22,12 @@ router.get('/:id', function(req, res, next) {
             res.status(401).json({error: "User does not exist"});
         }
         else
-            //found user
+        //found user
             var result = {
-                id: id,
-                username: find.username,
-                cash: find.cash
+                username: username,
+                userID: find.userID,
             };
-            res.json(result);
+        res.json(result);
     });
     //res.send(id);
     //next();
