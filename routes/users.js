@@ -3,15 +3,15 @@ var router = express.Router();
 var app = require('../app');
 var models = require('../models');
 
-app.models = models.collections;
-app.connections = models.connections;
+//app.models = models.collections;
+//app.connections = models.connections;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next,app) {
     var id = req.params.id;
     console.log(id);
     console.log(app.models);
