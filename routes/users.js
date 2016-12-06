@@ -18,9 +18,11 @@ router.get('/:id', function(req, res, next) {
     req.app.models.user.findOneById(id).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find user.'});
+            return;
         }
         if (!find) {
             res.status(401).json({error: "User does not exist"});
+            return;
         }
         //found user
         return res.json(find.cash);
