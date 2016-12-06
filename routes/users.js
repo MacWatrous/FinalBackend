@@ -25,7 +25,8 @@ router.get('/:id', function(req, res, next) {
             return;
         }
         //found user
-        return res.json(find.cash);
+        res.json(find.cash);
+        return;
     });
     //res.send(id);
     next();
