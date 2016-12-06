@@ -21,13 +21,14 @@ router.get('/:username', function(req, res, next) {
         else if (!find) {
             res.status(401).json({error: "User does not exist"});
         }
-        else
-        //found user
+        else {
+            //found user
             var result = {
-                username: username,
-                userID: find.userID
+                    username: username,
+                    userID: find.id
             };
-        res.json(result);
+            res.json(result);
+        }
     });
     //res.send(id);
     //next();

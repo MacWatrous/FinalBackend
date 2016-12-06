@@ -21,7 +21,7 @@ router.get('/:id', function(req, res, next) {
         else if (!find) {
             res.status(401).json({error: "User does not exist"});
         }
-        else
+        else {
             //found user
             var result = {
                 id: id,
@@ -29,6 +29,7 @@ router.get('/:id', function(req, res, next) {
                 cash: find.cash
             };
             res.json(result);
+        }
     });
     //res.send(id);
     //next();
