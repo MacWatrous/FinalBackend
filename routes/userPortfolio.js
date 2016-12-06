@@ -48,6 +48,7 @@ router.get('/:id', function(req, res, next) {
 router.get('/:id/:ticker', function(req, res, next) {
     var id = req.params.id;
     var ticker = req.params.ticker;
+    ticker = ticker.toUpperCase();
     //console.log(req.app.models);
 
     req.app.models.stocks.findById(id).exec(function (err, find){
@@ -71,7 +72,6 @@ router.get('/:id/:ticker', function(req, res, next) {
                     stocks.push(indvStock);
                 }
             }
-
             var result = {
                 id: id,
                 stocks: stocks
