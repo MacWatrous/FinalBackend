@@ -52,7 +52,7 @@ router.post('/:id', function(req, res, next) {
                 username: find.username,
                 cash: find.cash
             };
-            res.json(result);
+            res.json(find);
         }
     });
     //res.send(id);
