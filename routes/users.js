@@ -39,7 +39,7 @@ router.post('/:id', function(req, res, next) {
     var id = req.params.id;
     var body = req.body.cash;
     //console.log(req.app.models);
-    req.app.models.user.findOneById(id).exec(function (err, find){
+    req.app.models.user.update({id:id},{cash:body}).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find user.'});
         }
