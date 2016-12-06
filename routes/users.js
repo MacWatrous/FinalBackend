@@ -48,11 +48,11 @@ router.post('/:id', function(req, res, next) {
         }
         else {
             var result = {
-                id: id,
+                id: find.id,
                 username: find.username,
                 cash: find.cash
             };
-            res.json(find);
+            res.json(result);
         }
     });
     //res.send(id);
