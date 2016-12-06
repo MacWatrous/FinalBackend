@@ -9,7 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var names = require('./routes/userNames')
 var userSpecific = require('./routes/userNames');
-
+var userPortfolio = require('./routes/userPortfolio');
 var app = module.exports = express();
 
 // view engine setup
@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/users/names', userSpecific);
+app.use('/users/portfolio', userPortfolio);
 
 
 // catch 404 and forward to error handler
