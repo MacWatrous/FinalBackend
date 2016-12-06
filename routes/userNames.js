@@ -25,7 +25,7 @@ router.get('/:username', function(req, res, next) {
         //found user
             var result = {
                 username: username,
-                userID: find.userID,
+                userID: find.userID
             };
         res.json(result);
     });
