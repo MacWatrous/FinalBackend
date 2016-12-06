@@ -68,7 +68,7 @@ router.get('/:id/:ticker', function(req, res, next) {
                         sharePrice: find[i].purchasePrice,
                         shares: find[i].purchaseAmount
                     };
-                    stocks.push(indvStock)
+                    stocks.push(indvStock);
                 }
             }
 
