@@ -43,7 +43,12 @@ router.post('/:username', function(req, res, next) {
             res.status(500).json(err);
         }
         else {
-            res.json(newUser);
+            var result = {
+                id: newUser.id,
+                username: newUser.username,
+                cash: newUser.cash
+            };
+            res.json(result);
         }
     });
     //res.send(id);
