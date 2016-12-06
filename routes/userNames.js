@@ -40,7 +40,7 @@ router.post('/:username', function(req, res, next) {
     //console.log(req.app.models);
     req.app.models.user.create({username: username, cash: cash}).exec(function (err, newUser){
         if (err) {
-            res.status(500).json({error: 'Error when trying to create user.'});
+            res.status(500).json(err);
         }
         else {
             res.json(newUser);
