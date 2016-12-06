@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/:id', function(req, res, next,app) {
+router.get('/:id', function(req, res, next) {
     var id = req.params.id;
     console.log(id);
     console.log(app.models);
