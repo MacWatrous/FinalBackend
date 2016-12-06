@@ -14,8 +14,8 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     var id = req.params.id;
     console.log(id);
-    console.log(req.app.models);
-    app.models.user.findOneById(id).exec(function (err, find){
+    //console.log(req.app.models);
+    req.app.models.user.findOneById(id).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find user.'});
         }
