@@ -11,7 +11,6 @@ var User = Waterline.Collection.extend({
         id: {
             type: 'integer',
             autoIncrement: true,
-            required: true,
             unique: true,
             primaryKey: true
         },
