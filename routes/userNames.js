@@ -34,4 +34,21 @@ router.get('/:username', function(req, res, next) {
     //next();
 });
 
+router.post('/:username', function(req, res, next) {
+    var username = req.params.username;
+    var cash = req.body.cash;
+    //console.log(req.app.models);
+    req.app.models.user.create({username: username, cash: cash}).exec(function (err, newUser){
+        if (err) {
+            res.status(500).json({error: 'Error when trying to create user.'});
+        }
+        else {
+            res.json(newUser);
+        }
+    });
+    //res.send(id);
+    //next();
+});
+
+
 module.exports = router;
