@@ -39,7 +39,7 @@ router.post('/:id', function(req, res, next) {
     var id = req.params.id;
     var body = req.body.cash;
     //console.log(req.app.models);
-    req.app.models.user.update({id:id},{cash:body}).exec(function (err, find){
+    req.app.models.user.findOneById({id:id},{cash:body}).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find user.'});
         }
@@ -48,12 +48,20 @@ router.post('/:id', function(req, res, next) {
         }
         else {
             //found user
-            var result = {
-                id: id,
-                username: find.username,
-                cash: find.cash
-            };
-            res.json(result);
+            find.update({cash:find.cash},{cash:body}).exec(function afterwards(err, updated){
+                if (err) {
+                    res.status(500).json({error: 'Error when trying to update user.'});
+                }
+                else {
+                    var result = {
+                        id: id,
+                        username: updated.username,
+                        cash: updated.cash
+                    };
+                    res.json(result);
+                }
+            });
+
         }
     });
     //res.send(id);
