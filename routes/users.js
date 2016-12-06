@@ -24,7 +24,12 @@ router.get('/:id', function(req, res, next) {
         }
         else
             //found user
-            res.json(find.cash);
+            var result = {
+                id: id,
+                username: find.username,
+                cash: find.cash
+            };
+            res.json(result);
     });
     //res.send(id);
     //next();
