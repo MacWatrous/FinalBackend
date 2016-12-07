@@ -86,9 +86,9 @@ router.get('/:id/:ticker', function(req, res, next) {
 router.post('/:id/:ticker', function(req, res, next) {
     var id = req.params.id;
     var ticker = req.params.ticker;
-    var val = req.body.shareValue;
+    var val = req.body.purchasePrice;
     var purchDate = req.body.purchaseDate;
-    var shareNum = req.body.shares;
+    var shareNum = req.body.purchaseAmount;
     ticker = ticker.toUpperCase();
     //console.log(req.app.models);
 
