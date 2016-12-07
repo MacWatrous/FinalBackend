@@ -56,7 +56,7 @@ router.get('/:id/:ticker', function(req, res, next) {
             res.status(500).json({error: 'Error when trying to find a users stocks'});
         }
         else if (!find) {
-            res.status(401).json({error: "User has no stocks"});
+            res.status(401).json({error: "User not found"});
         }
         else {
             //found user
@@ -64,10 +64,10 @@ router.get('/:id/:ticker', function(req, res, next) {
             for (var i =0;i<find.length;i++){
                 if (find[i].stockTicker == ticker) {
                     var indvStock = {
-                        ticker: find[i].stockTicker,
+                        stockTicker: find[i].stockTicker,
                         purchaseDate: find[i].purchaseDate,
-                        sharePrice: find[i].purchasePrice,
-                        shares: find[i].purchaseAmount
+                        purchasePrice: find[i].purchasePrice,
+                        purchaseAmount: find[i].purchaseAmount
                     };
                     stocks.push(indvStock);
                 }
@@ -75,6 +75,38 @@ router.get('/:id/:ticker', function(req, res, next) {
             var result = {
                 id: id,
                 stocks: stocks
+            };
+            res.json(result);
+        }
+    });
+    //res.send(id);
+    //next();
+});
+
+router.post('/:id/:ticker', function(req, res, next) {
+    var id = req.params.id;
+    var ticker = req.params.ticker;
+    var val = req.body.shareValue;
+    var purchDate = req.body.purchaseDate;
+    var shareNum = req.body.shares;
+    ticker = ticker.toUpperCase();
+    //console.log(req.app.models);
+
+    req.app.models.stocks.create({id: id,stockTicker: ticker, purchaseDate: purchDate, purchasePrice: val, purchaseAmount: shareNum}).exec(function (err, find){
+        if (err) {
+            res.status(500).json({error: 'Error when trying to find a users stocks'});
+        }
+        else if (!find) {
+            res.status(401).json({error: "User has no stocks"});
+        }
+        else {
+            //found user
+            var result = {
+                id: id,
+                stockTicker: ticker,
+                purchaseDate: purchDate,
+                purchasePrice: val,
+                purchaseAmount: shareNum
             };
             res.json(result);
         }
