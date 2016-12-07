@@ -51,7 +51,7 @@ router.get('/:id/:ticker', function(req, res, next) {
     ticker = ticker.toUpperCase();
     //console.log(req.app.models);
 
-    req.app.models.stocks.findById(id).exec(function (err, find){
+    req.app.models.stocks.findByStockTicker(ticker).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find a users stocks'});
         }
