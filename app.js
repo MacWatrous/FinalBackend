@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var names = require('./routes/userNames')
 var userSpecific = require('./routes/userNames');
 var userPortfolio = require('./routes/userPortfolio');
+var stocks = require('./routes/stockInfo');
 var app = module.exports = express();
 
 // view engine setup
@@ -28,6 +29,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/users/names', userSpecific);
 app.use('/users/portfolio', userPortfolio);
+app.use('/stocks',stocks);
 
 
 // catch 404 and forward to error handler
