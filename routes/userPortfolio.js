@@ -27,10 +27,10 @@ router.get('/:id', function(req, res, next) {
             var stocks = [];
             for (var i =0;i<find.length;i++){
                 var indvStock = {
-                    ticker: find[i].stockTicker,
+                    stockTicker: find[i].stockTicker,
                     purchaseDate: find[i].purchaseDate,
-                    sharePrice: find[i].purchasePrice,
-                    shares: find[i].purchaseAmount
+                    purchasePrice: find[i].purchasePrice,
+                    purchaseAmount: find[i].purchaseAmount
                 };
                 stocks.push(indvStock)
             }
@@ -41,8 +41,6 @@ router.get('/:id', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 router.get('/:id/:ticker', function(req, res, next) {
@@ -79,8 +77,6 @@ router.get('/:id/:ticker', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 router.post('/:id/:ticker', function(req, res, next) {
@@ -111,8 +107,6 @@ router.post('/:id/:ticker', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 module.exports = router;

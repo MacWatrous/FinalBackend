@@ -31,8 +31,6 @@ router.get('/:id', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 router.post('/:id', function(req, res, next) {
@@ -55,8 +53,6 @@ router.post('/:id', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 module.exports = router;

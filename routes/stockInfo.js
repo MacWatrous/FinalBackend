@@ -9,7 +9,6 @@ var YQL = require('yql');
 /* query yahoo for big stock table. */
 router.post('/', function(req, res, next) {
     var stockTable = req.body.stocks;
-    result = [];
     var stockTicker = [];
     var shareP = [];
     var shareN = [];
@@ -17,25 +16,51 @@ router.post('/', function(req, res, next) {
     var asks = [];
     var dividends =[];
     var pes = [];
+    var names =[];
+    var stockArray = [];
     for (var i =0;i<stockTable.length;i++){
         //handle having multiple entries for same stock..?
         stockTicker.push(stockTable[i].stockTicker);
         shareP.push(stockTable[i].purchasePrice);
         shareN.push(stockTable[i].purchaseAmount);
-        startVal.push(shareN * shareP);
-
+        startVal.push(shareN[i] * shareP[i]);
     }
-    var yqlText = 'select * from yahoo.finance.quote where symbol in (\"';
+    //Getting value of shares when purchased
+    for (var i =0;i<stockTable.length;i++){
+        for (var j=i+1;j<stockTable.length;j++){
+            if (stockTicker[i] == stockTicker[j]){
+                shareN[i] += shareN[j];
+                startVal[i] += startVal[j];
+            }
+        }
+    }
+
+    var cumulativeArray =[];
+    var tracker = [];
+    for (var i =0;i<stockTable.length;i++){
+        if (!(cumulativeArray.indexOf(stockTicker[i])>-1)){
+            cumulativeArray.push(stockTicker[i]);
+            tracker.push(i);
+        }
+    }
+    console.log(cumulativeArray,tracker);
+    console.log(stockTicker,shareP,shareN,startVal);
+    var yqlText = 'select * from yahoo.finance.quotes where symbol in (\"';
     for (var i = 0;i<stockTicker.length;i++){
+        if (i>0){
+            yqlText+=',\"';
+        }
         yqlText += stockTicker[i] + '\"';
     }
     yqlText += ')';
     var query = new YQL(yqlText);
     query.exec(function (error, response) {
-        response = response.query.results.quotes;
+        //console.log(response.query.results.quote);
+        response = response.query.results.quote;
         for (var i =0;i<response.length;i++){
             //handle having multiple entries for same stock..?
             asks.push(response[i].Bid);
+            names.push(response[i].Name);
             if (response[i].DividendYield == null){
                 dividends.push(0);
             }
@@ -45,36 +70,86 @@ router.post('/', function(req, res, next) {
                 pes.push('no data');
             }
             else
-                pes.push(response[i].PERatio)
+                pes.push(response[i].PERatio);
+            var stock = {
+                stockTicker: cumulativeArray[i],
+                company: names[i],
+                price: asks[i],
+                shares: shareN[tracker[i]],
+                positionVal: shareN[tracker[i]]*asks[i],
+                returnDol: shareN[tracker[i]]*asks[i]-startVal[tracker[i]],
+                returnPercent: shareN[tracker[i]]*asks[i]/startVal[tracker[i]],
+                dividendYield: dividends[i],
+                beta: "",
+                peratio: pes[i],
+                sector: "",
+                industry: ""
+            };
+            stockArray.push(stock);
         }
-        res.json(asks);
+        res.json(stockArray);
     });
-
 });
 
 /* query yahoo for specific stock enhanced info */
-router.get('/:id', function(req, res, next) {
-    var id = req.params.id;
-    //console.log(req.app.models);
-    req.app.models.user.findOneById(id).exec(function (err, find){
-        if (err) {
-            res.status(500).json({error: 'Error when trying to find user.'});
+router.get('/:ticker', function(req, res, next) {
+    var stockTicker = req.params.ticker;
+    stockTicker = stockTicker.toUpperCase();
+    var yqlText = 'select * from yahoo.finance.quotes where symbol in (\"'+ stockTicker + '\")';
+    var query = new YQL(yqlText);
+    query.exec(function (error, response) {
+        //console.log(response.query.results.quote);
+        response = response.query.results.quote;
+        var dividends = 0;
+        if (response.DividendYield != null){
+            dividends = response.DividendYield;
         }
-        else if (!find) {
-            res.status(401).json({error: "User does not exist"});
+        var pes = 'no data';
+        if (response.PERatio != null){
+            pes = response.PERatio;
         }
-        else {
-            //found user
-            var result = {
-                id: id,
-                username: find.username,
-                cash: find.cash
-            };
-            res.json(result);
+
+        var stock = {
+            stockTicker: stockTicker,
+            company: response.Name,
+            price: response.Bid,
+            dividendYield: dividends,
+            beta: "",
+            peratio: pes,
+            sector: "",
+            industry: "",
+            daysRange: response.DaysRange
+        };
+        var today = new Date();
+        var lastYear = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var lessYear = yyyy-1;
+
+        if(dd<10) {
+            dd='0'+dd
         }
+
+        if(mm<10) {
+            mm='0'+mm
+        }
+        today = yyyy+'-'+ mm +'-'+dd;
+        lastYear = lessYear+'-'+ mm +'-'+dd;
+        var yqlText2 = 'select * from yahoo.finance.historicaldata where symbol = \"'+ stockTicker + '\" and startDate = \"' + lastYear + '\" and endDate = \"' + today + '\"';
+        var query2 = new YQL(yqlText2);
+        query2.exec(function (error, response) {
+            console.log(response);
+            response = response.query.results.quote;
+            var historical = [];
+            for (var i =0;i<response.length;i++){
+                historical.push(response[i].Close);
+            }
+            historical.push
+            stock.historical = historical;
+            res.json(stock);
+        });
     });
-    //res.send(id);
-    //next();
 });
 
 module.exports = router;

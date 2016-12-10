@@ -13,7 +13,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/:username', function(req, res, next) {
     var username = req.params.username;
-    //console.log(req.app.models);
     req.app.models.user.findOneByUsername(username).exec(function (err, find){
         if (err) {
             res.status(500).json({error: 'Error when trying to find user.'});
@@ -30,14 +29,11 @@ router.get('/:username', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 router.post('/:username', function(req, res, next) {
     var username = req.params.username;
     var cash = req.body.cash;
-    //console.log(req.app.models);
     req.app.models.user.create({username: username, cash: cash}).exec(function (err, newUser){
         if (err) {
             res.status(500).json(err);
@@ -51,8 +47,6 @@ router.post('/:username', function(req, res, next) {
             res.json(result);
         }
     });
-    //res.send(id);
-    //next();
 });
 
 
