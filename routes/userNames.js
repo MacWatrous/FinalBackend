@@ -23,8 +23,9 @@ router.get('/:username', function(req, res, next) {
         else {
             //found user
             var result = {
+                    id: find.id,
                     username: username,
-                    userID: find.id
+                    cash: find.id
             };
             res.json(result);
         }

@@ -90,10 +90,10 @@ router.post('/:id/:ticker', function(req, res, next) {
 
     req.app.models.stocks.create({id: id,stockTicker: ticker, purchaseDate: purchDate, purchasePrice: val, purchaseAmount: shareNum}).exec(function (err, find){
         if (err) {
-            res.status(500).json({error: 'Error when trying to find a users stocks'});
+            res.status(500).json({error: 'Error when trying to create a users stocks'});
         }
         else if (!find) {
-            res.status(401).json({error: "User has no stocks"});
+            res.status(401).json({error: "Param not found"});
         }
         else {
             //found user
