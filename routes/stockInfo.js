@@ -3,6 +3,7 @@ var router = express.Router();
 var app = require('../app');
 var models = require('../models');
 var YQL = require('yql');
+var googleFinance = require('google-finance');
 //app.models = models.collections;
 //app.connections = models.connections;
 
@@ -43,8 +44,6 @@ router.post('/', function(req, res, next) {
             tracker.push(i);
         }
     }
-    console.log(cumulativeArray,tracker);
-    console.log(stockTicker,shareP,shareN,startVal);
     var yqlText = 'select * from yahoo.finance.quotes where symbol in (\"';
     for (var i = 0;i<stockTicker.length;i++){
         if (i>0){
@@ -71,6 +70,7 @@ router.post('/', function(req, res, next) {
             }
             else
                 pes.push(response[i].PERatio);
+
             var stock = {
                 stockTicker: cumulativeArray[i],
                 company: names[i],
@@ -151,5 +151,44 @@ router.get('/:ticker', function(req, res, next) {
         });
     });
 });
+
+//Get our stocks news Tickers
+router.put('/', function(req, res, next) {
+    var stockTable = req.body.stocks;
+    var stockTicker = [];
+
+    for (var i =0;i<stockTable.length;i++){
+        //handle having multiple entries for same stock..?
+        stockTicker.push(stockTable[i].stockTicker);
+    }
+    //Getting value of shares when purchased
+    for (var i =0;i<stockTable.length;i++){
+        for (var j=i+1;j<stockTable.length;j++){
+            if (stockTicker[i] == stockTicker[j]){
+                shareN[i] += shareN[j];
+                startVal[i] += startVal[j];
+            }
+        }
+    }
+    var cumulativeArray =[];
+    var tracker = [];
+    for (var i =0;i<stockTable.length;i++){
+        if (!(cumulativeArray.indexOf(stockTicker[i])>-1)){
+            cumulativeArray.push(stockTicker[i]);
+            tracker.push(i);
+        }
+    }
+
+    googleFinance.companyNews({
+        symbol: cumulativeArray
+    }, function(err, news){
+        for (var i = 0; i<cumulative.length;i++){
+            news[0].title;
+            news[0].link;
+        }
+
+    });
+});
+
 
 module.exports = router;
