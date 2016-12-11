@@ -157,3 +157,94 @@ $(function () {
     opt.dataLabels.enabled = !opt.dataLabels.enabled;
     chart.series[1].update(opt);
 });
+
+// leanModal v1.1 by Ray Stone - http://finelysliced.com.au
+// Dual licensed under the MIT and GPL
+(function ($) {
+    $.fn.extend({
+        leanModal: function (options) {
+            var defaults = {
+                top: 100,
+                overlay: 0.5,
+                closeButton: null
+            };
+            var overlay = $("<div id='lean_overlay'></div>");
+            $("body").append(overlay);
+            options = $.extend(defaults, options);
+            return this.each(function () {
+                var o = options;
+                var modal_id = $(this).attr("href");
+
+                function showModal() {
+                    $("#lean_overlay").click(function () {
+                        close_modal(modal_id)
+                    });
+                    $(o.closeButton).click(function () {
+                        console.log(document.getElementById("username").value);
+                        close_modal(modal_id)
+                    });
+
+                    var modal_height = $(modal_id).outerHeight();
+                    var modal_width = $(modal_id).outerWidth();
+
+                    $("#lean_overlay").css({
+                        "display": "block",
+                        opacity: 0
+                    });
+
+                    $("#lean_overlay").fadeTo(200, o.overlay);
+
+                    $(modal_id).css({
+                        "display": "block",
+                        "position": "fixed",
+                        "opacity": 0,
+                        "z-index": 11000,
+                        "left": 50 + "%",
+                        "margin-left": -(modal_width / 2) + "px",
+                        "top": o.top + "px"
+                    });
+
+                    $(modal_id).fadeTo(200, 1);
+                };
+
+                $(document).ready(function () {
+                    showModal();
+                });
+
+                $(this).click(function (e) {
+                    showModal();
+                    e.preventDefault()
+                })
+
+
+            });
+
+            function close_modal(modal_id) {
+                findUser();
+
+                $("#lean_overlay").fadeOut(200);
+                $(modal_id).css({
+                    "display": "none"
+                })
+
+
+            }
+        }
+    })
+})(jQuery);
+
+$('#findUser').on('click', findUser);
+
+function findUser(event) {
+    event.preventDefault();
+
+    var username = $('#username').val();
+
+    $.ajax({
+        type:'GET',
+        url: '/users/names/' + username,
+        dataType: 'JSON'
+    }).done(function(response) {
+        console.log(response);
+    });
+};
