@@ -22,7 +22,11 @@ router.get('/:id', function(req, res, next) {
             res.status(401).json({error: "User does not exist"});
         }
         else {
-            //found user
+            var result = {
+                id: find.id,
+                username: find.username,
+                cash: find.cash
+            };
             res.json(result);
         }
     });

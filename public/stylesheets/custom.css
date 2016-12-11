@@ -1,0 +1,83 @@
+h1 small {
+    font-size: 0%;  
+}
+.myrow {
+    font-size: 0;
+}
+.myrow > * {
+    float: none;
+    display: inline-block;
+    font-size: 14px; /* if using LESS it's quicker to just use @font-size-base */
+}
+.myrow > *:last-child {
+    vertical-align: bottom;
+}
+.myrow div:last-child {
+    margin-bottom: 0; /* optional */
+}
+
+h4 {
+    margin-bottom: 0;
+}
+.row.myrow h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.container-fluid {
+    margin-left: 15px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+    padding-left: 0px;
+}
+
+.col-md-12#stocks {
+    text-decoration: underline;
+}
+
+.row#stocksheader > * {
+    text-decoration: underline;
+    text-align: center;
+}
+
+.row#stocksview {
+    text-align: center;
+}
+
+.row#stocksview h5 {
+    color: blue;
+}
+
+.col-md-1#companyname h5 {
+    font-weight: bold; 
+}
+
+.col-md-2#searchheader {
+    margin-top: 0px;
+    
+}
+
+.col-md-2#searchheader h3 {
+    border: solid;
+    
+    vertical-align: middle;
+    
+    text-align: center;
+}
+
+.row#searchbar {
+    padding-bottom: 0px;
+    
+}
+
+.col-md-1#searchbar {
+    text-align: center;
+}
+
+.col-md-2#searchbar input {
+    margin-left: 0px;
+    
+    padding-left: 0px;
+}
