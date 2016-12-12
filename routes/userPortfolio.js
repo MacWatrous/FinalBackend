@@ -39,7 +39,8 @@ router.get('/:id', function(req, res, next) {
                 id: id,
                 stocks: stocks
             };
-            res.json(result);
+            res.send(JSON.parse(JSON.stringify(result)));
+            //res.json(result);
         }
     });
 });

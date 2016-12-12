@@ -1,5 +1,10 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
+var global_ID;
+var global_cash;
+var global_username;
+var global_stockarray;
+
 $(function(){
     $("ul#ticker01").liScroll();
 });
@@ -168,28 +173,39 @@ function findUser(event) {
 
     var username = $('#username').val();
 
+
     $.ajax({
         type:'GET',
         url: '/users/names/' + username,
         dataType: 'JSON'
     }).done(function(response) {
-        console.log(response);
-    });
-};
+        global_ID = response.id;
+        global_cash = response.cash;
+        global_username = response.username;
 
-
-function onLogin() {
-
-    $.ajax({
-        type: 'GET',
-        url: '/portfolio/',
-        dataType: 'JSON',
-    }).done(function(response) {
-
+        $.ajax({
+            type: 'GET',
+            url: '/users/portfolio/' + global_ID,
+            dataType: 'JSON'
+        }).done(function (response2) {
+            global_stockarray = response2;
+            console.log(global_stockarray);
+            var run = setInterval(mainLoop, 10000);
+        });
     });
 }
 
-function mainLoop(array)
+function mainLoop() {
+    console.log(global_stockarray);
+    $.ajax({
+        method: 'POST',
+        data: global_stockarray,
+        dataType: 'JSON',
+        url: '/stocks'
+    }).done(function(response) {
+        console.log(response);
+    });
+}
 
 
 
