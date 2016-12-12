@@ -13,21 +13,58 @@
 
 </head>
 <body>
-<div id="overlay">
-    <div id="loginmodal" class="popupContainer">
-        <header class="popupHeader">
-            <h1>User Login</h1>
-        </header>
+    <div id="overlay">
+        <div id="loginmodal" class="popupContainer">
+            <header class="popupHeader">
+                <h1>User Login</h1>
+            </header>
 
-        <div class="popupBody">
-            <fieldset>
-                <label for="username">Username:</label><input type="text" name="username" id="username"><br>
-                <label for="password">Password:</label><input type="password" name="password" id="password"><br>
-                <button id="findUser">Log in</button>
-            </fieldset>
+            <div class="popupBody">
+                <fieldset>
+                    <label for="username">Username:</label><input type="text" name="username" id="username"><br>
+                    <label for="password">Password:</label><input type="password" name="password" id="password"><br>
+                    <button id="findUser">Log in</button>
+                </fieldset>
+            </div>
         </div>
     </div>
-</div>
+
+    <div id="search_overlay" style="display:none;">
+        <div>
+            <header class="popupHeader">
+                <h1></h1>     needs to add the company name dynamically
+            </header>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"> <h3>Price</h3> </div>
+            <div class="col-md-1"> <h3>Dividend Yield</h3> </div>
+            <div class="col-md-1"> <h3>Beta</h3> </div>
+            <div class="col-md-1"> <h3>PE Ratio</h3> </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"> <h5></h5></div>
+            <div class="col-md-1"> <h5></h5></div>
+            <div class="col-md-1"> <h5></h5></div>
+            <div class="col-md-1"> <h5></h5></div>
+        </div>
+
+        <div id="pricehistory">
+            <p>graph goes here</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>ASK:</h4> <span class="askprice"></span>
+            </div>
+            <div class="col-md-6">
+                <h4>TOTAL:</h4> <span class="totalamount"></span>
+                <button id="addbtn">Add to Portfolio</button>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -198,6 +235,9 @@
                 <button id="searchbtn">Search</button>
             </div>
     </div>
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
