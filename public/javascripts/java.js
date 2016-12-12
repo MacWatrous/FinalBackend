@@ -10,7 +10,7 @@ $(function(){
 });
 
 $(function () {
-    
+
 
     var colors = Highcharts.getOptions().colors,
         categories = ['MSIE', 'Firefox', 'Chrome', 'Safari', 'Opera'],
@@ -206,16 +206,63 @@ function findUser(event) {
             dataType: 'JSON'
         }).done(function (response2) {
             global_stockarray = response2;
-            console.log(global_stockarray);
+            mainLoop();
             var run = setInterval(mainLoop, 10000);
+            googleLoop();
+            var run2 = setInterval(googleLoop, 100000)
         });
     });
 }
 
 function mainLoop() {
-    console.log(global_stockarray);
     $.ajax({
         method: 'POST',
+        data: JSON.stringify(global_stockarray),
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/stocks'
+    }).done(function(response) {
+        $('#companyname').empty();
+        $('#price').empty();
+        $('#shares').empty();
+        $('#positionVal').empty();
+        $('#returnPer').empty();
+        $('#dividendYield').empty();
+        $('#beta').empty();
+        $('#peratio').empty();
+        $('#sector').empty();
+        $('#industry').empty();
+
+        for (var i = 0; i<response.length;i++){
+            console.log('hello');
+            var row = $('<div></div>').text(response[i].company).addClass('row');
+            $('#companyname').append(row);
+            var row2 = $('<div></div>').text(response[i].price).addClass('row');
+            $("#price").append(row2);
+            var row3 = $('<div></div>').text(response[i].shares).addClass('row');
+            $("#shares").append(row3);
+            var row4 = $('<div></div>').text(response[i].positionVal).addClass('row');
+            $("#positionVal").append(row4);
+            var row5 = $('<div></div>').text(response[i].returnPercent).addClass('row');
+            $("#returnPer").append(row5);
+            var row6 = $('<div></div>').text(response[i].dividendYield).addClass('row');
+            $("#dividendYield").append(row6);
+            var row7 = $('<div></div>').text(response[i].beta).addClass('row');
+            $("#beta").append(row7);
+            var row8 = $('<div></div>').text(response[i].peratio).addClass('row');
+            $("#peratio").append(row8);
+            var row9 = $('<div></div>').text(response[i].sector).addClass('row');
+            $("#sector").append(row9);
+            var row10 = $('<div></div>').text(response[i].industry).addClass('row');
+            $("#industry").append(row10);
+        }
+        console.log(response);
+    });
+}
+
+function googleLoop() {
+    $.ajax({
+        method: 'PUT',
         data: JSON.stringify(global_stockarray),
         dataType: 'JSON',
         contentType: 'application/json; charset=UTF-8',
@@ -224,7 +271,5 @@ function mainLoop() {
         console.log(response);
     });
 }
-
-
 
 

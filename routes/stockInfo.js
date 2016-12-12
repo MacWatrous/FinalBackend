@@ -175,14 +175,12 @@ router.put('/', function(req, res, next) {
             tracker.push(i);
         }
     }
-    console.log(cumulativeArray);
     googleFinance.companyNews({
         symbols: cumulativeArray
     }, function(err, news){
         if (err) {throw err;}
         var story = [];
         var date = [];
-        console.log(news);
         for (var i = 0; i<cumulativeArray.length;i++){
             story.push(news[cumulativeArray[i]][0].title);
             date.push(news[cumulativeArray[i]][0].date);

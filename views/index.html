@@ -4,254 +4,262 @@
     <meta charset="utf-8">
     <title>PortHol</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional Bootstrap theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="stylesheets/custom.css">
     <link type="text/css" rel="stylesheet" href="stylesheets/li-scroller.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
 </head>
 <body>
-    <div id="overlay">
-        <div id="loginmodal" class="popupContainer">
-            <header class="popupHeader">
-                <h1>User Login</h1>
-            </header>
+<div id="overlay">
+    <div id="loginmodal" class="popupContainer">
+        <header class="popupHeader">
+            <h1>User Login</h1>
+        </header>
 
-            <div class="popupBody">
-                <fieldset>
-                    <label for="username">Username:</label><input type="text" name="username" id="username"><br>
-                    <label for="password">Password:</label><input type="password" name="password" id="password"><br>
-                    <button id="findUser">Log in</button>
-                </fieldset>
-            </div>
+        <div class="popupBody">
+            <fieldset>
+                <label for="username">Username:</label><input type="text" name="username" id="username"><br>
+                <label for="password">Password:</label><input type="password" name="password" id="password"><br>
+                <button id="findUser">Log in</button>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<div id="overlayhider" style="display:none;">
+    <div id="search_overlay"></div>
+    <div id="searchmodal">
+        <header class="popupHeader">
+            <h1>Yahoo</h1>
+        </header>
+    </div>
+
+    <div class="row" id="statline">
+        <div class="col-md-2"><h5>Price</h5></div>
+        <div class="col-md-2"><h5>Dividend Yield</h5></div>
+        <div class="col-md-2"><h5>Beta</h5></div>
+        <div class="col-md-2"><h5>PE Ratio</h5></div>
+        <div class="col-md-2"><h5>Exchange</h5></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"><p></p></div>
+        <div class="col-md-2"><p></p></div>
+        <div class="col-md-2"><p></p></div>
+        <div class="col-md-2"><p></p></div>
+        <div class="col-md-2"><p></p></div>
+    </div>
+
+    <div class="row" id="pricehistory">
+        <div class="col-md-12"><p>graph goes here</p></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label id="userprice">User Price:</label> <input type="text" name="userprice" class="userprice"
+                                                             placeholder="$0.00">
+        </div>
+        <div class="col-md-6">
+            <label>Total Cost:</label> <span class="totalamount"></span>
         </div>
     </div>
 
-    <div id="overlayhider" style="display:none;">
-        <div id="search_overlay"> </div>
-        <div id="searchmodal">
-            <header class="popupHeader">
-                <h1>Yahoo</h1>
-            </header>
-        </div>
-
-        <div class="row" id="statline">
-            <div class="col-md-2"> <h5>Price</h5> </div>
-            <div class="col-md-2"> <h5>Dividend Yield</h5> </div>
-            <div class="col-md-2"> <h5>Beta</h5> </div>
-            <div class="col-md-2"> <h5>PE Ratio</h5> </div>
-            <div class="col-md-2"> <h5>Exchange</h5> </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2"> <p></p> </div>
-            <div class="col-md-2"> <p></p> </div>
-            <div class="col-md-2"> <p></p> </div>
-            <div class="col-md-2"> <p></p> </div>
-            <div class="col-md-2"> <p></p> </div>
-        </div>
-
-        <div class="row" id="pricehistory">
-            <div class="col-md-12"> <p>graph goes here</p> </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <label id="userprice">User Price:</label> <input type="text" name="userprice" class="userprice" placeholder="$0.00">
-            </div>
-            <div class="col-md-6">
-                <label>Total Cost:</label> <span class="totalamount"></span>
-            </div>
-        </div>
-
-        <div class="row" id="addbtn">
-            <button>Add to Portfolio</button>
-        </div>
-
+    <div class="row" id="addbtn">
+        <button>Add to Portfolio</button>
     </div>
 
+</div>
 
 
-
-
-
-
-    <div class="container-fluid">
-        <div class="row myrow">
-            <div class = "col-md-2">
-                <h1>PortHol</h1>
-            </div>
-            <div class = "col-md-3 rightspan">
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Time Machine
+<div class="container-fluid">
+    <div class="row myrow">
+        <div class="col-md-2">
+            <h1>PortHol</h1>
+        </div>
+        <div class="col-md-3 rightspan">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Time Machine
                     <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Current</a></li>
-                        <li><a href="#">3 Months</a></li>
-                        <li><a href="#">6 Months</a></li>
-                        <li><a href="#">YTD</a></li>
-                        <li><a href="#">5 Years</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <ul id="ticker01" class = "col-md-7">
-                    <li><span>10/10/2007</span><a href="#">The first thing ...</a></li>
-                    <li><span>10/10/2007</span><a href="#">End up doing is ...</a></li>
-                    <li><span>10/10/2007</span><a href="#">The code that you ...</a></li>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Current</a></li>
+                    <li><a href="#">3 Months</a></li>
+                    <li><a href="#">6 Months</a></li>
+                    <li><a href="#">YTD</a></li>
+                    <li><a href="#">5 Years</a></li>
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div class = "col-xs-8">
-                <h4>Portfolio</h4>
-                <div class="col-xs-6">
-                    <ul> 
-                        <li>Value: <small>$200</small></li>
-                        <li>Return: <small>$2 (6%)</small></li>
-                        <li>Yield: <small>8%</small></li>
-                    </ul>
-                </div>
-                <div class="col-xs-6">
-                    <ul> 
-                        <li>Beta: <small>6</small></li>
-                        <li>PE: <small>2000</small></li>
-                    </ul>
-                </div>
+        <div class="col-md-7">
+            <ul id="ticker01" class="col-md-7">
+                <li><span>10/10/2007</span><a href="#">The first thing ...</a></li>
+                <li><span>10/10/2007</span><a href="#">End up doing is ...</a></li>
+                <li><span>10/10/2007</span><a href="#">The code that you ...</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <h4>Portfolio</h4>
+            <div class="col-xs-6">
+                <ul>
+                    <li>Value:
+                        <small>$200</small>
+                    </li>
+                    <li>Return:
+                        <small>$2 (6%)</small>
+                    </li>
+                    <li>Yield:
+                        <small>8%</small>
+                    </li>
+                </ul>
             </div>
-            <div class = "col-xs-3 rightspan " >
-                <div class = "pull-right" id="pie" style="height:225px; width:225px;" ></div>
+            <div class="col-xs-6">
+                <ul>
+                    <li>Beta:
+                        <small>6</small>
+                    </li>
+                    <li>PE:
+                        <small>2000</small>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" id="stocks">
-                <h2>Stocks</h2>
-            </div>       
-        </div>  
-        
-        
-        
-        
-        <div class="row" id="stocksheader">
-            <div class="col-md-1">
-                <h4>Company</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Price</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Shares</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Position Value</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Return ($ / %)</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Dividend Yield</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Beta</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>PE Ratio</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Sector</h4>
-            </div>
-            <div class="col-md-1">
-                <h4>Industry</h4>
-            </div>
+        <div class="col-xs-3 rightspan ">
+            <div class="pull-right" id="pie" style="height:225px; width:225px;"></div>
         </div>
-        
-        
-        
-        <div class="row" id="stocksview">
-            <div class="col-md-1" id="companyname">
-                <div class="row"><h5>KR</h5></div>
-                <div class="row"><h5>CVS</h5></div>
-                <div class="row"><h5>WMT</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>$32</h5></div>
-                <div class="row"><h5>$83</h5></div>
-                <div class="row"><h5>$60</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class ="row"><h5>100</h5></div>
-                <div class ="row"><h5>100</h5></div>
-                <div class ="row"><h5>100</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>$3200</h5></div>
-                <div class="row"><h5>$8300</h5></div>
-                <div class="row"><h5>$6000</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>100%</h5></div>
-                <div class="row"><h5>100%</h5></div>
-                <div class="row"><h5>100%</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>2.1%</h5></div>
-                <div class="row"><h5>3.0%</h5></div>
-                <div class="row"><h5>2.5%</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>1.1</h5></div>
-                <div class="row"><h5>1.2</h5></div>
-                <div class="row"><h5>0.8</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>15</h5></div>
-                <div class="row"><h5>16</h5></div>
-                <div class="row"><h5>9</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>Consumer Staples</h5></div>
-                <div class="row"><h5>Consumer Staples</h5></div>
-                <div class="row"><h5>Consumer Staples</h5></div>
-            </div>
-            
-            <div class="col-md-1">
-                <div class="row"><h5>Grocery</h5></div>
-                <div class="row"><h5>Pharmacy</h5></div>
-                <div class="row"><h5>Retail</h5></div>
-            </div>   
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="stocks">
+            <h2>Stocks</h2>
         </div>
-        
-        
-        <div class="row">
-            <div class="col-md-2" id="searchheader">
-                <h3>Add a Stock</h3>
-            </div>
-        </div>
-        
-        
-        <div class="row" id="searchbar">
-            <div class="col-md-12">
-                <input type="text" placeholder="Enter Ticker Here" id="searchinput">
-                <button id="searchbtn">Search</button>
-            </div>
     </div>
 
 
+    <div class="row" id="stocksheader">
+        <div class="col-md-1">
+            <h4>Company</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Price</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Shares</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Position Value</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Return ($ / %)</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Dividend Yield</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Beta</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>PE Ratio</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Sector</h4>
+        </div>
+        <div class="col-md-1">
+            <h4>Industry</h4>
+        </div>
+    </div>
+
+
+    <div class="row" id="stocksview">
+        <div class="col-md-1" id="companyname">
+            <div class="row"><h5>KR</h5></div>
+            <div class="row"><h5>CVS</h5></div>
+            <div class="row"><h5>WMT</h5></div>
+        </div>
+
+        <div class="col-md-1" id="price">
+            <div class="row"><h5>$32</h5></div>
+            <div class="row"><h5>$83</h5></div>
+            <div class="row"><h5>$60</h5></div>
+        </div>
+
+        <div class="col-md-1" id="shares">
+            <div class="row"><h5>100</h5></div>
+            <div class="row"><h5>100</h5></div>
+            <div class="row"><h5>100</h5></div>
+        </div>
+
+        <div class="col-md-1" id="positionVal">
+            <div class="row"><h5>$3200</h5></div>
+            <div class="row"><h5>$8300</h5></div>
+            <div class="row"><h5>$6000</h5></div>
+        </div>
+
+        <div class="col-md-1" id="returnPer">
+            <div class="row"><h5>100%</h5></div>
+            <div class="row"><h5>100%</h5></div>
+            <div class="row"><h5>100%</h5></div>
+        </div>
+
+        <div class="col-md-1" id="dividendYield">
+            <div class="row"><h5>2.1%</h5></div>
+            <div class="row"><h5>3.0%</h5></div>
+            <div class="row"><h5>2.5%</h5></div>
+        </div>
+
+        <div class="col-md-1" id="beta">
+            <div class="row"><h5>1.1</h5></div>
+            <div class="row"><h5>1.2</h5></div>
+            <div class="row"><h5>0.8</h5></div>
+        </div>
+
+        <div class="col-md-1" id="peratio">
+            <div class="row"><h5>15</h5></div>
+            <div class="row"><h5>16</h5></div>
+            <div class="row"><h5>9</h5></div>
+        </div>
+
+        <div class="col-md-1" id="sector">
+            <div class="row"><h5>Consumer Staples</h5></div>
+            <div class="row"><h5>Consumer Staples</h5></div>
+            <div class="row"><h5>Consumer Staples</h5></div>
+        </div>
+
+        <div class="col-md-1" id="industry">
+            <div class="row"><h5>Grocery</h5></div>
+            <div class="row"><h5>Pharmacy</h5></div>
+            <div class="row"><h5>Retail</h5></div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2" id="searchheader">
+            <h3>Add a Stock</h3>
+        </div>
+    </div>
+
+
+    <div class="row" id="searchbar">
+        <div class="col-md-12">
+            <input type="text" placeholder="Enter Ticker Here" id="searchinput">
+            <button id="searchbtn">Search</button>
+        </div>
+    </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-    <script   src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"   integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+            integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="javascripts/jquery.li-scroller.1.0.js"></script>
     <script src="javascripts/java.js"></script>
 </body>
