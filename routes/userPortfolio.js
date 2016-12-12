@@ -30,7 +30,8 @@ router.get('/:id', function(req, res, next) {
                     stockTicker: find[i].stockTicker,
                     purchaseDate: find[i].purchaseDate,
                     purchasePrice: find[i].purchasePrice,
-                    purchaseAmount: find[i].purchaseAmount
+                    purchaseAmount: find[i].purchaseAmount,
+                    exchange: find[i].exchange
                 };
                 stocks.push(indvStock)
             }
@@ -65,7 +66,8 @@ router.get('/:id/:ticker', function(req, res, next) {
                         stockTicker: find[i].stockTicker,
                         purchaseDate: find[i].purchaseDate,
                         purchasePrice: find[i].purchasePrice,
-                        purchaseAmount: find[i].purchaseAmount
+                        purchaseAmount: find[i].purchaseAmount,
+                        exchange: find[i].exchange
                     };
                     stocks.push(indvStock);
                 }
@@ -85,6 +87,7 @@ router.post('/:id/:ticker', function(req, res, next) {
     var val = req.body.purchasePrice;
     var purchDate = req.body.purchaseDate;
     var shareNum = req.body.purchaseAmount;
+    var exchange = req.body.exchange;
     ticker = ticker.toUpperCase();
     //console.log(req.app.models);
 
@@ -102,7 +105,8 @@ router.post('/:id/:ticker', function(req, res, next) {
                 stockTicker: ticker,
                 purchaseDate: purchDate,
                 purchasePrice: val,
-                purchaseAmount: shareNum
+                purchaseAmount: shareNum,
+                exchange: exchange
             };
             res.json(result);
         }

@@ -101,6 +101,7 @@ router.get('/:ticker', function(req, res, next) {
         //console.log(response.query.results.quote);
         response = response.query.results.quote;
         var dividends = 0;
+        var exchange ='';
         if (response.DividendYield != null){
             dividends = response.DividendYield;
         }
@@ -108,7 +109,11 @@ router.get('/:ticker', function(req, res, next) {
         if (response.PERatio != null){
             pes = response.PERatio;
         }
-
+        if (response.StockExchange == 'NMS'){
+            exchange = 'NASDAQ';
+        }
+        else
+            exchange = 'NYSE';
         var stock = {
             stockTicker: stockTicker,
             company: response.Name,
@@ -118,6 +123,7 @@ router.get('/:ticker', function(req, res, next) {
             peratio: pes,
             sector: "",
             industry: "",
+            exchange: exchange,
             daysRange: response.DaysRange
         };
         var today = new Date();
@@ -161,15 +167,6 @@ router.put('/', function(req, res, next) {
         //handle having multiple entries for same stock..?
         stockTicker.push(stockTable[i].stockTicker);
     }
-    //Getting value of shares when purchased
-    for (var i =0;i<stockTable.length;i++){
-        for (var j=i+1;j<stockTable.length;j++){
-            if (stockTicker[i] == stockTicker[j]){
-                shareN[i] += shareN[j];
-                startVal[i] += startVal[j];
-            }
-        }
-    }
     var cumulativeArray =[];
     var tracker = [];
     for (var i =0;i<stockTable.length;i++){
@@ -178,15 +175,22 @@ router.put('/', function(req, res, next) {
             tracker.push(i);
         }
     }
-
+    console.log(cumulativeArray);
     googleFinance.companyNews({
         symbol: cumulativeArray
     }, function(err, news){
-        for (var i = 0; i<cumulative.length;i++){
-            news[0].title;
-            news[0].link;
+        var story = [];
+        var date = [];
+        console.log(news);
+        for (var i = 0; i<cumulativeArray.length;i++){
+            story.push(news[cumulativeArray[i]][0].title);
+            date.push(news[cumulativeArray[i]][0].date);
         }
-
+        var result = {
+            stories: story,
+            dates: date
+        };
+        res.json(result);
     });
 });
 
