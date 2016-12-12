@@ -19,6 +19,7 @@
     "sails-mysql" : "0.11.5",
     "yql" : "1.0.2",
     "google-finance" : "0.1.8",
-    "ejs" : "2.5.5"
+    "ejs" : "2.5.5",
+    "chart.js": "2.4.0"
   }
 }

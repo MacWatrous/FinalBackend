@@ -61,9 +61,7 @@ h4 {
 
 .col-md-2#searchheader h3 {
     border: solid;
-    
     vertical-align: middle;
-    
     text-align: center;
 }
 
@@ -79,7 +77,7 @@ h4 {
     left: 0px;
     height:100%;
     width:100%;
-    background: #000;
+    background: #34495e;
     opacity: 1;
 }
 
@@ -92,7 +90,7 @@ h4 {
     height: auto;
     left:45%;
     top:80px;
-    background: #FFF;
+    background: #2c3e50;
 }
 
 .popupHeader {
@@ -174,4 +172,13 @@ h4 {
 #statline.row{
     padding-bottom: 5px;
     border-bottom: thin;
+}
+
+input {
+    color: #2F4F4F;
+}
+
+body {
+    color: white;
+    background-color: #34495e;
 }

@@ -12,6 +12,8 @@
     <link type="text/css" rel="stylesheet" href="stylesheets/custom.css">
     <link type="text/css" rel="stylesheet" href="stylesheets/li-scroller.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+
 
 </head>
 <body>
@@ -36,6 +38,7 @@
     <div id="searchmodal">
         <header class="popupHeader">
             <h1>Yahoo</h1>
+            <canvas id="myChart" width="400" height="400"></canvas>
         </header>
     </div>
 
@@ -56,7 +59,6 @@
     </div>
 
     <div class="row" id="pricehistory">
-        <div class="col-md-12"><p>graph goes here</p></div>
     </div>
 
     <div class="row">
@@ -79,7 +81,7 @@
 <div class="container-fluid">
     <div class="row myrow">
         <div class="col-md-2">
-            <h1>PortHol</h1>
+            <img src="images/PortHolLogo.png" style="width:190px;">
         </div>
         <div class="col-md-3 rightspan">
             <div class="dropdown">
