@@ -176,3 +176,21 @@ function findUser(event) {
         console.log(response);
     });
 };
+
+
+function onLogin() {
+
+    $.ajax({
+        type: 'GET',
+        url: '/portfolio/',
+        dataType: 'JSON',
+    }).done(function(response) {
+
+    });
+}
+
+function mainLoop(array)
+
+
+
+
