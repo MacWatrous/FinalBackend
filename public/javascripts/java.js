@@ -164,6 +164,18 @@ $(function () {
 });
 
 
+$('#searchbtn').on('click', searchDialog);
+
+function searchDialog(event) {
+    event.preventDefault();
+
+    $('#overlay').show();
+
+    var searchFor = $('#searchinput').val();
+
+
+}
+
 $('#findUser').on('click', findUser);
 
 function findUser(event) {
@@ -201,6 +213,7 @@ function mainLoop() {
         method: 'POST',
         data: global_stockarray,
         dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
         url: '/stocks'
     }).done(function(response) {
         console.log(response);
