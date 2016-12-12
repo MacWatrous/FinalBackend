@@ -83,16 +83,7 @@ h4 {
     opacity: 1;
 }
 
-#search_overlay {
-    position: fixed;
-    z-index:100;
-    top: 0px;
-    left: 0px;
-    height:100%;
-    width:100%;
-    background: #000;
-    opacity: 0.5;
-}
+
 
 .popupContainer{
     position:absolute;
@@ -125,4 +116,62 @@ h4 {
 
 #searchbtn {
     float: right;
+}
+
+#search_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    opacity: 0.5;
+}
+
+#searchmodal {
+    position: absolute;
+    height: 60%;
+    width: 50%;
+    left: 25%;
+    z-index:1000;
+    background: white;
+    color: black;
+    opacity: 1;
+}
+
+
+#pricehistory {
+    border: thin;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+}
+
+#search_overlay h3 h4 {
+    font-weight: bold;
+}
+
+#searchmodal.popupHeader {
+    text-align: left;
+}
+
+#searchmodal.row {
+    height: 30px;
+    padding-bottom: 5px;
+}
+
+#searchmodal.col-md-2 {
+    text-align: center;
+    padding-right: 10px;
+}
+
+#addbtn {
+    text-align:center;
+    padding-top: 15px;
+}
+
+#statline.row{
+    padding-bottom: 5px;
+    border-bottom: thin;
 }

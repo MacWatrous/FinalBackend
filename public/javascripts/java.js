@@ -164,24 +164,22 @@ $(function () {
 });
 
 
-$('#searchbtn').on('click', searchDialog);
 
+$('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
 
-    $('#search_overlay').show();
+    $('#overlayhider').show();
 
     var searchFor = $('#searchinput').val();
+
     console.log(searchFor);
-
-    $('#addbtn').on('click', function(e) {
-
-    })
-
-
-
-
 }
+$('#addbtn').on('click', function(e) {
+    e.preventDefault();
+    $('#overlayhider').hide();
+});
+
 
 $('#findUser').on('click', findUser);
 

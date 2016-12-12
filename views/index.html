@@ -29,42 +29,52 @@
         </div>
     </div>
 
-    <div id="search_overlay" style="display:none;">
-        <div>
+    <div id="overlayhider" style="display:none;">
+        <div id="search_overlay"> </div>
+        <div id="searchmodal">
             <header class="popupHeader">
-                <h1></h1>     needs to add the company name dynamically
+                <h1>Yahoo</h1>
             </header>
         </div>
 
-
-        <div class="row">
-            <div class="col-md-1"> <h3>Price</h3> </div>
-            <div class="col-md-1"> <h3>Dividend Yield</h3> </div>
-            <div class="col-md-1"> <h3>Beta</h3> </div>
-            <div class="col-md-1"> <h3>PE Ratio</h3> </div>
+        <div class="row" id="statline">
+            <div class="col-md-2"> <h5>Price</h5> </div>
+            <div class="col-md-2"> <h5>Dividend Yield</h5> </div>
+            <div class="col-md-2"> <h5>Beta</h5> </div>
+            <div class="col-md-2"> <h5>PE Ratio</h5> </div>
+            <div class="col-md-2"> <h5>Exchange</h5> </div>
         </div>
 
         <div class="row">
-            <div class="col-md-1"> <h5></h5></div>
-            <div class="col-md-1"> <h5></h5></div>
-            <div class="col-md-1"> <h5></h5></div>
-            <div class="col-md-1"> <h5></h5></div>
+            <div class="col-md-2"> <p></p> </div>
+            <div class="col-md-2"> <p></p> </div>
+            <div class="col-md-2"> <p></p> </div>
+            <div class="col-md-2"> <p></p> </div>
+            <div class="col-md-2"> <p></p> </div>
         </div>
 
-        <div id="pricehistory">
-            <p>graph goes here</p>
+        <div class="row" id="pricehistory">
+            <div class="col-md-12"> <p>graph goes here</p> </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <h4>ASK:</h4> <span class="askprice"></span>
+                <label id="userprice">User Price:</label> <input type="text" name="userprice" class="userprice" placeholder="$0.00">
             </div>
             <div class="col-md-6">
-                <h4>TOTAL:</h4> <span class="totalamount"></span>
-                <button id="addbtn">Add to Portfolio</button>
+                <label>Total Cost:</label> <span class="totalamount"></span>
             </div>
         </div>
+
+        <div class="row" id="addbtn">
+            <button>Add to Portfolio</button>
+        </div>
+
     </div>
+
+
+
+
 
 
 
