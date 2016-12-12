@@ -4,10 +4,7 @@ var global_ID;
 var global_cash;
 var global_username;
 var global_stockarray;
-
-$(function(){
-    $("ul#ticker01").liScroll();
-});
+var runCount = 0;
 
 $(function () {
 
@@ -186,7 +183,7 @@ $('#findUser').on('click', findUser);
 function findUser(event) {
     event.preventDefault();
 
-    $("#overlay").hide();
+    $("#overlay").hide(1000);
 
     var username = $('#username').val();
 
@@ -234,7 +231,6 @@ function mainLoop() {
         $('#industry').empty();
 
         for (var i = 0; i<response.length;i++){
-            console.log('hello');
             var row = $('<div></div>').text(response[i].company).addClass('row');
             $('#companyname').append(row);
             var row2 = $('<div></div>').text(response[i].price).addClass('row');
@@ -256,7 +252,6 @@ function mainLoop() {
             var row10 = $('<div></div>').text(response[i].industry).addClass('row');
             $("#industry").append(row10);
         }
-        console.log(response);
     });
 }
 
@@ -268,8 +263,21 @@ function googleLoop() {
         contentType: 'application/json; charset=UTF-8',
         url: '/stocks'
     }).done(function(response) {
-        console.log(response);
+        $('#ticker01').empty();
+        for (var i = 0; i<response.dates.length;i++){
+            var li = $('<li></li>');
+            var date = $('<span></span>').text(response.dates[i].substring(5,10)+' ');
+            var a = $('<a></a>').attr("href",response.links[i]).text(response.stories[i]);
+            li.append(date);
+            li.append(a);
+            $('#ticker01').append(li);
+        }
+        if (runCount == 0){
+            $(function(){
+                $("ul#ticker01").liScroll();
+            });
+        }
+        runCount++;
     });
 }
-
 

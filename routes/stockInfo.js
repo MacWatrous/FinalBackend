@@ -181,13 +181,16 @@ router.put('/', function(req, res, next) {
         if (err) {throw err;}
         var story = [];
         var date = [];
+        var links = [];
         for (var i = 0; i<cumulativeArray.length;i++){
             story.push(news[cumulativeArray[i]][0].title);
             date.push(news[cumulativeArray[i]][0].date);
+            links.push(news[cumulativeArray[i]][0].link);
         }
         var result = {
             stories: story,
-            dates: date
+            dates: date,
+            links: links
         };
         res.json(result);
     });
