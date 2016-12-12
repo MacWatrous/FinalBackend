@@ -165,7 +165,8 @@ router.put('/', function(req, res, next) {
 
     for (var i =0;i<stockTable.length;i++){
         //handle having multiple entries for same stock..?
-        stockTicker.push(stockTable[i].stockTicker);
+
+        stockTicker.push(stockTable[i].exchange + ':' + stockTable[i].stockTicker);
     }
     var cumulativeArray =[];
     var tracker = [];
