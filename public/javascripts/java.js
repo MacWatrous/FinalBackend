@@ -169,9 +169,16 @@ $('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
 
-    $('#overlay').show();
+    $('#search_overlay').show();
 
     var searchFor = $('#searchinput').val();
+    console.log(searchFor);
+
+    $('#addbtn').on('click', function(e) {
+
+    })
+
+
 
 
 }
@@ -211,7 +218,7 @@ function mainLoop() {
     console.log(global_stockarray);
     $.ajax({
         method: 'POST',
-        data: global_stockarray,
+        data: JSON.stringify(global_stockarray),
         dataType: 'JSON',
         contentType: 'application/json; charset=UTF-8',
         url: '/stocks'
