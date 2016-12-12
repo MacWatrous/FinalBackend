@@ -44,7 +44,7 @@ router.post('/', function(req, res, next) {
             tracker.push(i);
         }
     }
-    var yqlText = 'select * from yahoo.finance.quotes where symbol in (\"';
+    var yqlText = 'env \'store://datatables.org/alltableswithkeys\'; select * from yahoo.finance.quotes where symbol in (\"';
     for (var i = 0;i<stockTicker.length;i++){
         if (i>0){
             yqlText+=',\"';
@@ -54,7 +54,6 @@ router.post('/', function(req, res, next) {
     yqlText += ')';
     var query = new YQL(yqlText);
     query.exec(function (error, response) {
-        //console.log(response.query.results.quote);
         response = response.query.results.quote;
         for (var i =0;i<response.length;i++){
             //handle having multiple entries for same stock..?
@@ -178,8 +177,9 @@ router.put('/', function(req, res, next) {
     }
     console.log(cumulativeArray);
     googleFinance.companyNews({
-        symbol: cumulativeArray
+        symbols: cumulativeArray
     }, function(err, news){
+        if (err) {throw err;}
         var story = [];
         var date = [];
         console.log(news);
