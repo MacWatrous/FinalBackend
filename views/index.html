@@ -13,6 +13,7 @@
 
 </head>
 <body>
+<div id="overlay">
     <div id="loginmodal" class="popupContainer">
         <header class="popupHeader">
             <h1>User Login</h1>
@@ -26,7 +27,7 @@
             </fieldset>
         </div>
     </div>
-
+</div>
 
 
 
@@ -192,17 +193,10 @@
         
         
         <div class="row" id="searchbar">
-            <div class="col-md-1" id="searchbar">
-                <p>Enter Ticker:</p>
+            <div class="col-md-12">
+                <input type="text" placeholder="Enter Ticker Here" id="searchinput">
+                <button id="searchbtn">Search</button>
             </div>
-            <div class="col-md-2" id="searchbar">
-                <input type="text"> 
-            </div>
-            
-            <div class="col-md-8">
-            </div>
-            
-        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

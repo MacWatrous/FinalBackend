@@ -72,12 +72,47 @@ h4 {
     
 }
 
-.col-md-1#searchbar {
+
+#overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    opacity: 1;
+}
+
+.popupContainer{
+    position:absolute;
+    z-index: 1000;
+    width:330px;
+    height: auto;
+    left:45%;
+    top:80px;
+    background: #FFF;
+}
+
+.popupHeader {
     text-align: center;
 }
 
-.col-md-2#searchbar input {
-    margin-left: 0px;
-    
-    padding-left: 0px;
+.popupBody label{
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+
+.popupBody{
+    text-align: center;
+    margin: 0 auto;
+}
+
+#searchinput {
+    width: 93%;
+}
+
+#searchbtn {
+    float: right;
 }
