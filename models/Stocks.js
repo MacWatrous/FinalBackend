@@ -27,6 +27,10 @@ var Stocks = Waterline.Collection.extend({
         purchaseAmount: {
             type: 'integer',
             required: true
+        },
+        exchange: {
+            type: 'string',
+            required: true
         }
     }
 });
