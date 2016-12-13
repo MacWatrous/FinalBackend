@@ -41,7 +41,7 @@
         <div id="searchmodal">
 
             <div class="row" id="close">
-                <button class="pull-right" id="closebtn">Close</button>
+                <button class="pull-right btn btn-danger btn-sm" id="closebtn">Close</button>
             </div>
             <div class="row" id="search-header">
                 <div class="col-md-3" id="name"> <!-- This column will have Company name -->
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="col-md-3" id="addbtn">
-                    <button class="pull-right">Add to Portfolio</button>
+                    <button class="pull-right btn btn-success btn-sm">Add to Portfolio</button>
                 </div>
             </div>
         </div>
@@ -113,13 +113,13 @@
 
 <div class="row" id="welcomebar">
     <div class="col-md-3" id="welcomebar-user">
-        <p>Hello Username</p>
+        <p>Hello <span>Username</span></p>
     </div>
     <div class="col-md-6" id="welcomebar-clock">
         <p>PUT TIME HERE</p>
     </div>
     <div class="col-md-3" id="welcomebar-logout">
-        <button class="pull-right">Log out</button>
+        <button class="pull-right btn btn-primary btn-sm">Log out</button>
     </div>
 </div>
 
@@ -130,17 +130,7 @@
             <img src="images/PortHolLogo.png" style="width:190px;">
         </div>
         <div class="col-md-3 rightspan">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Time Machine
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Current</a></li>
-                    <li><a href="#">3 Months</a></li>
-                    <li><a href="#">6 Months</a></li>
-                    <li><a href="#">YTD</a></li>
-                    <li><a href="#">5 Years</a></li>
-                </ul>
-            </div>
+
         </div>
         <div class="col-md-7">
             <ul id="ticker01" class="col-md-7">
@@ -167,12 +157,28 @@
             </div>
         </div>
         <div class="col-xs-2 rightspan " id="piechartcontainer">
-            <canvas id="myChartPie" width="150" height="150" style="margin-top:20px;"></canvas>
+            <canvas id="myChartPie" width="150" height="150" style="margin-top:10px;"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 rightspan">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">View Major Market Indices
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">S&P 500</a></li>
+                    <li><a href="#">Dow Jones Industrial Average</a></li>
+                    <li><a href="#">Nasdaq</a></li>
+                    <li><a href="#">10-year Treasury</a></li>
+                    <li><a href="#">Gold</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div class="row" id="graphcontainer">
-        <canvas id="myGSPCChart" width="100%" height="15%" style="margin-top:20px;"></canvas>
+        <canvas id="myGSPCChart" width="100%" height="11%" style="margin-top:10px;"></canvas>
     </div>
 
 
@@ -286,7 +292,7 @@
     <div class="row" id="searchbar">
         <div class="col-md-12">
             <input type="text" placeholder="Enter Ticker Here" id="searchinput">
-            <button id="searchbtn">Search</button>
+            <button class="btn btn-secondary btn-sm" id="searchbtn">Search</button>
         </div>
     </div>
 
