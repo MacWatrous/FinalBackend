@@ -165,11 +165,9 @@ $(function () {
 $('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
-
-    $('#overlayhider').show();
-
     var searchFor = $('#searchinput').val();
-
+    graphLoop(searchFor);
+    $('#overlayhider').show();
     console.log(searchFor);
 }
 $('#addbtn').on('click', function(e) {
@@ -281,40 +279,53 @@ function googleLoop() {
     });
 }
 
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+function graphLoop(stock) {
+    $.ajax({
+        method: 'GET',
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/stocks/'+ stock
+    }).done(function(response) {
+        var labels =[]; //dates
+        var data = []; //stock closing prices
+        for (var i = 0;i<response.historical.length; i++){
+            labels.push(response.historical[i].date);
+            data.push(response.historical[i].price);
         }
+        makeGraph(labels,data);
+    });
+}
+var ctx = document.getElementById("myChart");
+
+function makeGraph(labels, data){
+    var backgroundColor = [];
+    var borderColor = [];
+    for (var i = labels.length;i>0;i--){
+        backgroundColor.push('rgba('+200+','+i+','+i+',0.2'+')');
+        borderColor.push('rgba('+200+','+i+','+i+',1'+')');
     }
-});
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Day\'s Close ($)',
+                data: data,
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            //maintainAspectRatio: true,
+            scales: {
+                yAxes: [{
+                    //barThickness:200,
+                    ticks: {
+                        //beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+}
