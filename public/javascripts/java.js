@@ -20,10 +20,43 @@ function searchDialog(event) {
 }
 $('#addbtn').on('click', function(e) {
     e.preventDefault();
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd='0'+dd
+    }
 
-    clearInterval(stockLoop);
-    mainGraph();
-    $('#overlayhider').hide();
+    if(mm<10) {
+        mm='0'+mm
+    }
+    today = yyyy+'-'+ mm +'-'+dd;
+    var payload = {
+        purchasePrice: $('#userprice').val(),
+        purchaseDate: today,
+        purchaseAmount: $('#usershares').val(),
+        exchange: "NYSE"
+    };
+    console.log(payload);
+    $.ajax({
+        method: 'POST',
+        data: JSON.stringify(payload),
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/users/portfolio/'+ global_ID + '/' + searchFor
+    }).done(function(response) {
+        global_stockarray.stocks.push({stockTicker: response.stockTicker,
+            purchaseDate: response.purchaseDate,
+            purchasePrice: response.purchasePrice,
+            purchaseAmount: response.purchaseAmount,
+            exchange: response.exchange});
+        console.log(global_stockarray);
+        clearInterval(stockLoop);
+        mainLoop();
+        mainGraph();
+        $('#overlayhider').hide();
+    });
 });
 
 
@@ -75,10 +108,9 @@ function mainLoop() {
         $('#positionVal').empty();
         $('#returnPer').empty();
         $('#dividendYield').empty();
-        $('#beta').empty();
         $('#peratio').empty();
-        $('#sector').empty();
-        $('#industry').empty();
+        $("#marketcap").empty();
+        $("#eps").empty();
 
         for (var i = 0; i<response.length;i++){
             var row = $('<div></div>').text(response[i].company).addClass('row');
@@ -93,14 +125,12 @@ function mainLoop() {
             $("#returnPer").append(row5);
             var row6 = $('<div></div>').text(response[i].dividendYield).addClass('row');
             $("#dividendYield").append(row6);
-            var row7 = $('<div></div>').text(response[i].beta).addClass('row');
-            $("#beta").append(row7);
-            var row8 = $('<div></div>').text(response[i].peratio).addClass('row');
-            $("#peratio").append(row8);
-            var row9 = $('<div></div>').text(response[i].sector).addClass('row');
-            $("#sector").append(row9);
-            var row10 = $('<div></div>').text(response[i].industry).addClass('row');
-            $("#industry").append(row10);
+            var row7 = $('<div></div>').text(response[i].peratio).addClass('row');
+            $("#peratio").append(row7);
+            var row8 = $('<div></div>').text(response[i].marketCap).addClass('row');
+            $("#marketcap").append(row8);
+            var row9 = $('<div></div>').text(response[i].earningsShare).addClass('row');
+            $("#eps").append(row9);
         }
     });
 }
@@ -193,7 +223,7 @@ function mainGraph(){
     for (var i = 0;i<mainTable.length; i++){
         labels.push(mainTable[i].company);
         data.push(mainTable[i].positionVal);
-        backgroundColor.push('rgba('+100+','+i+40+','+i+25+',0.7'+')');
+        backgroundColor.push('rgba('+100+','+i+40+','+i+25+',0.8'+')');
         borderColor.push('rgba('+100+','+i+40+','+i+25+',1'+')');
     }
     var myChartPie = new Chart(ctx2, {
@@ -269,7 +299,7 @@ function overlayLoop(){
         $("#ps-r").append($('<p></p>').text(response.priceSales+'x'));
         $("#50d").append($('<p></p>').text('$'+response.movAvg50));
         $("#200d").append($('<p></p>').text('$'+response.movAvg200));
-        $("#change").append($('<p></p>').text(response.yearHighChange+'%'));
+        $("#change").append($('<p></p>').text(response.yearHighChange));
         $("#exchange").append($('<p></p>').text(response.exchange));
         $("#userprice").attr('placeholder','$'+response.price);
     });

@@ -57,7 +57,7 @@ router.post('/', function(req, res, next) {
         response = response.query.results.quote;
         for (var i =0;i<response.length;i++){
             //handle having multiple entries for same stock..?
-            asks.push(response[i].Bid);
+            asks.push(response[i].LastTradePriceOnly);
             names.push(response[i].Name);
             if (response[i].DividendYield == null){
                 dividends.push(0);
@@ -77,12 +77,12 @@ router.post('/', function(req, res, next) {
                 shares: shareN[tracker[i]],
                 positionVal: shareN[tracker[i]]*asks[i],
                 returnDol: shareN[tracker[i]]*asks[i]-startVal[tracker[i]],
-                returnPercent: shareN[tracker[i]]*asks[i]/startVal[tracker[i]],
+                returnPercent: (shareN[tracker[i]]*asks[i])/startVal[tracker[i]],
                 dividendYield: dividends[i],
-                beta: "",
-                peratio: pes[i],
-                sector: "",
-                industry: ""
+                marketCap: response[i].marketCapitalization,
+                movAvg200 : response[i].TwoHundreddayMovingAverage,
+                earningsShare: response[i].EarningsShare,
+                peratio: pes[i]
             };
             stockArray.push(stock);
         }
@@ -116,7 +116,7 @@ router.get('/:ticker', function(req, res, next) {
         var stock = {
             stockTicker: stockTicker,
             company: response.Name,
-            price: response.Bid,
+            price: response.LastTradePriceOnly,
             dividendYield: dividends,
             beta: "",
             peratio: pes,
