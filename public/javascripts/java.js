@@ -178,7 +178,6 @@ function findUser(event) {
 }
 
 function mainLoop() {
-    console.log(global_stockarray);
     $.ajax({
         method: 'POST',
         data: JSON.stringify(global_stockarray),
@@ -197,12 +196,14 @@ function mainLoop() {
         $("#marketcap").empty();
         $("#eps").empty();
         $("#200day").empty();
+        $('#portfoliovalue').empty();
+        $('#portfolioreturn').empty();
         console.log(response);
         var sum = 0;
         var dolReturn = 0;
         for (var i = 0; i<response.length;i++){
-            sum += response[i].positionVal;
-            dolReturn += response[i].returnDol;
+            sum += parseFloat(response[i].positionVal);
+            dolReturn += parseFloat(response[i].returnDol);
             var row = $('<div></div>').text(response[i].company).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $('#companyname').append(row);
             var row2 = $('<div></div>').text(response[i].price).addClass('row entry').attr('data-ticker',response[i].stockTicker);

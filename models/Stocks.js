@@ -10,11 +10,11 @@ var Stocks = Waterline.Collection.extend({
     attributes: {
         id: {
             type: 'integer',
-            required: true,
+            required: true
         },
         stockTicker: {
             type: 'string',
-            required: true,
+            required: true
         },
         purchaseDate: {
             type: 'date',
