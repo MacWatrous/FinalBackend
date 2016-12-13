@@ -123,7 +123,15 @@ router.get('/:ticker', function(req, res, next) {
             sector: "",
             industry: "",
             exchange: exchange,
-            daysRange: response.DaysRange
+            daysRange: response.DaysRange,
+            marketCap: response.marketCapitalization,
+            movAvg200 : response.TwoHundreddayMovingAverage,
+            weekLow52: response.YearLow,
+            weekHigh52: response.YearHigh,
+            priceSales: response.PriceSales,
+            movAvg50: response.FiftydayMovingAverage,
+            yearHighChange: response.PercebtChangeFromYearHigh,
+            earningsShare: response.EarningsShare
         };
         var today = new Date();
         var lastYear = new Date();

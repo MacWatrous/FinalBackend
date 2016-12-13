@@ -4,7 +4,9 @@ var global_ID;
 var global_cash;
 var global_username;
 var global_stockarray;
+var searchFor;
 var runCount = 0;
+var stockLoop;
 
 $(function () {
 
@@ -165,13 +167,15 @@ $(function () {
 $('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
-    var searchFor = $('#searchinput').val();
+    searchFor = $('#searchinput').val();
     graphLoop(searchFor);
+    stockLoop = setInterval(overlayLoop(),1000);
     $('#overlayhider').show();
     console.log(searchFor);
 }
 $('#addbtn').on('click', function(e) {
     e.preventDefault();
+    clearInterval(stockLoop);
     $('#overlayhider').hide();
 });
 
@@ -327,5 +331,58 @@ function makeGraph(labels, data){
                 }]
             }
         }
+    });
+}
+
+function overlayLoop(){
+    $.ajax({
+        method: 'GET',
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/stocks/'+ searchFor
+    }).done(function(response) {
+        /*var stock = {
+            stockTicker: stockTicker,
+            company: response.Name,
+            price: response.Bid,
+            dividendYield: dividends,
+            beta: "",
+            peratio: pes,
+            sector: "",
+            industry: "",
+            exchange: exchange,
+            daysRange: response.DaysRange,
+            marketCap: response.marketCapitalization,
+            movAvg200 : response.TwoHundreddayMovingAverage,
+            weekLow52: response.YearLow,
+            weekHigh52: response.YearHigh,
+            priceSales: response.PriceSales,
+            movAvg50: response.FiftydayMovingAverage,
+            yearHighChange: response.PercebtChangeFromYearHigh,
+        };*/
+        $("#52wk-L").empty();
+        $("#52wk-H").empty();
+        $("#mktcap").empty();
+        $("#dividend").empty();
+        $("#earnings").empty();
+        $("#pe-r").empty();
+        $("#ps-r").empty();
+        $("#50d").empty();
+        $("#200d").empty();
+        $("#change").empty();
+        $("#exchange").empty();
+
+        $("#52wk-L").append($('<p></p>').text('$'+response.weekLow52));
+        $("#52wk-H").append($('<p></p>').text('$'+response.weekHigh52));
+        $("#mktcap").append($('<p></p>').text('$'+response.marketCap));
+        $("#dividend").append($('<p></p>').text(response.dividendYield+'%'));
+        $("#earnings").append($('<p></p>').text(response.earningsShare));
+        $("#pe-r").append($('<p></p>').text(response.peratio));
+        $("#ps-r").append($('<p></p>').text(response.priceSales+'x'));
+        $("#50d").append($('<p></p>').text('$'+response.movAvg50));
+        $("#200d").append($('<p></p>').text('$'+response.movAvg200));
+        $("#change").append($('<p></p>').text(response.yearHighChange+'%'));
+        $("#exchange").append($('<p></p>').text(response.exchange));
+        $("#userprice").attr('placeholder','$'+response.price);
     });
 }
