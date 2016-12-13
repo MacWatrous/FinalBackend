@@ -13,7 +13,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
     var id = req.params.id;
-    //console.log(req.app.models);
 
     req.app.models.stocks.findById(id).exec(function (err, find){
         if (err) {
@@ -23,6 +22,7 @@ router.get('/:id', function(req, res, next) {
             res.status(401).json({error: "User has no stocks"});
         }
         else {
+            console.log(find);
             //found user
             var stocks = [];
             for (var i =0;i<find.length;i++){

@@ -78,8 +78,7 @@ router.post('/', function(req, res, next) {
             stockArray.push(stock);
             res.json(stockArray)
         }
-
-        else{
+        else {
             for (var i =0;i<response.length;i++){
                 //handle having multiple entries for same stock..?
                 asks.push(response[i].LastTradePriceOnly);
@@ -88,7 +87,7 @@ router.post('/', function(req, res, next) {
                     dividends.push(0);
                 }
                 else
-                    dividends.push(response[i].DividendYield)
+                    dividends.push(response[i].DividendYield);
                 if (response[i].PERatio == null){
                     pes.push('-');
                 }
@@ -109,6 +108,7 @@ router.post('/', function(req, res, next) {
                     earningsShare: response[i].EarningsShare,
                     peratio: pes[i]
                 };
+                console.log(stock);
                 stockArray.push(stock);
             }
             res.json(stockArray);
@@ -247,7 +247,7 @@ router.get('/', function(req, res, next) {
             lessYear = yyyy-1;
         }
         else {
-            lessMonth = 12+lessMonth
+            lessMonth = 12+lessMonth;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             lessYear = yyyy-1;
         }
     }

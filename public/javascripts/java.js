@@ -33,10 +33,12 @@ function startTime() {
     m = checkTime(m);
     $('#welcomebar-clock').empty();
     $('#welcomebar-clock').append($('<p></p>').text(h + ":" + m + time));
-    var t = setTimeout(startTime, 10000);
+    var t = setTimeout(startTime, 100000);
 }
 function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    if (i < 10) {
+        i = "0" + i
+    }  // add zero in front of numbers < 10
     return i;
 }
 
@@ -101,7 +103,7 @@ $('#addbtn').on('click', function(e) {
         mainLoop();
         run = setInterval(mainLoop, 10000);
         googleLoop();
-        run2 = setInterval(googleLoop, 100000);
+        run2 = setInterval(googleLoop, 1000000);
         $('#overlayhider').hide();
     });
 });
@@ -164,7 +166,8 @@ function findUser(event) {
         $.ajax({
             type: 'GET',
             url: '/users/portfolio/' + global_ID,
-            dataType: 'JSON'
+            dataType: 'JSON',
+            contentType: 'application/json; charset=UTF-8'
         }).done(function (response2) {
             console.log(response2);
             global_stockarray = response2;
@@ -176,6 +179,19 @@ function findUser(event) {
             run2 = setInterval(googleLoop, 100000)
         });
     });
+}
+
+$('body').on('click', '.entry', currentUpdate);
+
+function currentUpdate(event) {
+    event.preventDefault();
+    searchFor = $(this).attr('data-ticker');
+    console.log(searchFor);
+    graphLoop(searchFor);
+    overlayLoop();
+    stockLoop = setInterval(overlayLoop(),5000);
+    $('#overlayhider').show();
+    console.log(searchFor);
 }
 
 function mainLoop() {
@@ -234,18 +250,6 @@ function mainLoop() {
     });
 }
 
-$('body').on('click', '.entry', currentUpdate);
-
-function currentUpdate(event) {
-    event.preventDefault();
-    searchFor = $(this).attr('data-ticker');
-    console.log(searchFor);
-    graphLoop(searchFor);
-    overlayLoop();
-    stockLoop = setInterval(overlayLoop(),5000);
-    $('#overlayhider').show();
-    console.log(searchFor);
-}
 function googleLoop() {
     $.ajax({
         method: 'PUT',
@@ -272,7 +276,87 @@ function googleLoop() {
     });
 }
 
+function overlayLoop(){
+    $.ajax({
+        method: 'GET',
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/stocks/'+ searchFor
+    }).done(function(response) {
+        /*var stock = {
+         stockTicker: stockTicker,
+         company: response.Name,
+         price: response.Bid,
+         dividendYield: dividends,
+         beta: "",
+         peratio: pes,
+         sector: "",
+         industry: "",
+         exchange: exchange,
+         daysRange: response.DaysRange,
+         marketCap: response.marketCapitalization,
+         movAvg200 : response.TwoHundreddayMovingAverage,
+         weekLow52: response.YearLow,
+         weekHigh52: response.YearHigh,
+         priceSales: response.PriceSales,
+         movAvg50: response.FiftydayMovingAverage,
+         yearHighChange: response.PercebtChangeFromYearHigh,
+         };*/
+        $("#52wk-L").empty();
+        $("#52wk-H").empty();
+        $("#mktcap").empty();
+        $("#dividend").empty();
+        $("#earnings").empty();
+        $("#pe-r").empty();
+        $("#ps-r").empty();
+        $("#50d").empty();
+        $("#200d").empty();
+        $("#change").empty();
+        $("#exchangeimg").empty();
+        $("#name").empty();
+        $("#ticker").empty();
 
+        if (response.exchange=='NYSE'){
+            exchange = 'NYSE';
+            $("#exchangeimg").append($('<img>').attr('src','images/NYSE.png').css('width','100px'));
+        }
+        else {
+            exchange = 'NASDAQ';
+            $("#exchangeimg").append($('<img>').attr('src','images/Nasdaq.png').css('width','100px'));
+        }
+        $("#name").append($('<h1></h1>').text(response.company));
+        $("#ticker").append($('<h4></h4>').text(response.stockTicker));
+        $("#52wk-L").append($('<p></p>').text('$'+response.weekLow52));
+        $("#52wk-H").append($('<p></p>').text('$'+response.weekHigh52));
+        $("#mktcap").append($('<p></p>').text('$'+response.marketCap));
+        $("#dividend").append($('<p></p>').text(response.dividendYield+'%'));
+        $("#earnings").append($('<p></p>').text(response.earningsShare));
+        $("#pe-r").append($('<p></p>').text(response.peratio));
+        $("#ps-r").append($('<p></p>').text(response.priceSales+'x'));
+        $("#50d").append($('<p></p>').text('$'+response.movAvg50));
+        $("#200d").append($('<p></p>').text('$'+response.movAvg200));
+        $("#change").append($('<p></p>').text(response.yearHighChange));
+        $("#userprice").attr('placeholder','$'+response.price);
+    });
+}
+
+function graphLoop(stock) {
+    $.ajax({
+        method: 'GET',
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/stocks/'+ stock
+    }).done(function(response) {
+        var labels =[]; //dates
+        var data = []; //stock closing prices
+        for (var i = 0;i<response.historical.length; i++){
+            labels.push(response.historical[i].date);
+            data.push(response.historical[i].price);
+        }
+        var ctx = document.getElementById("myChart");
+        makeGraph(labels,data,ctx);
+    });
+}
 
 function indexGraph(selected){
     $.ajax({
@@ -330,26 +414,7 @@ function indexGraph(selected){
     });
 }
 
-
-function graphLoop(stock) {
-    $.ajax({
-        method: 'GET',
-        dataType: 'JSON',
-        contentType: 'application/json; charset=UTF-8',
-        url: '/stocks/'+ stock
-    }).done(function(response) {
-        var labels =[]; //dates
-        var data = []; //stock closing prices
-        for (var i = 0;i<response.historical.length; i++){
-            labels.push(response.historical[i].date);
-            data.push(response.historical[i].price);
-        }
-        var ctx = document.getElementById("myChart");
-        makeGraph(labels,data,ctx);
-    });
-}
-
-function makeGraph(labels, data,ctx, destroy){
+function makeGraph(labels, data,ctx){
     var backgroundColor = [];
     var borderColor = [];
     for (var i = labels.length;i>0;i--){
@@ -443,70 +508,3 @@ function mainGraph(){
     });
 }
 
-function overlayLoop(){
-    $.ajax({
-        method: 'GET',
-        dataType: 'JSON',
-        contentType: 'application/json; charset=UTF-8',
-        url: '/stocks/'+ searchFor
-    }).done(function(response) {
-        /*var stock = {
-            stockTicker: stockTicker,
-            company: response.Name,
-            price: response.Bid,
-            dividendYield: dividends,
-            beta: "",
-            peratio: pes,
-            sector: "",
-            industry: "",
-            exchange: exchange,
-            daysRange: response.DaysRange,
-            marketCap: response.marketCapitalization,
-            movAvg200 : response.TwoHundreddayMovingAverage,
-            weekLow52: response.YearLow,
-            weekHigh52: response.YearHigh,
-            priceSales: response.PriceSales,
-            movAvg50: response.FiftydayMovingAverage,
-            yearHighChange: response.PercebtChangeFromYearHigh,
-        };*/
-        $("#52wk-L").empty();
-        $("#52wk-H").empty();
-        $("#mktcap").empty();
-        $("#dividend").empty();
-        $("#earnings").empty();
-        $("#pe-r").empty();
-        $("#ps-r").empty();
-        $("#50d").empty();
-        $("#200d").empty();
-        $("#change").empty();
-        $("#exchangeimg").empty();
-        $("#name").empty();
-        $("#ticker").empty();
-
-        if (response.exchange=='NYSE'){
-            exchange = 'NYSE';
-            $("#exchangeimg").append($('<img>').attr('src','images/NYSE.png').css('width','100px'));
-        }
-        else {
-            exchange = 'NASDAQ';
-            $("#exchangeimg").append($('<img>').attr('src','images/Nasdaq.png').css('width','100px'));
-        }
-        $("#name").append($('<h1></h1>').text(response.company));
-        $("#ticker").append($('<h4></h4>').text(response.stockTicker));
-        $("#52wk-L").append($('<p></p>').text('$'+response.weekLow52));
-        $("#52wk-H").append($('<p></p>').text('$'+response.weekHigh52));
-        $("#mktcap").append($('<p></p>').text('$'+response.marketCap));
-        $("#dividend").append($('<p></p>').text(response.dividendYield+'%'));
-        $("#earnings").append($('<p></p>').text(response.earningsShare));
-        $("#pe-r").append($('<p></p>').text(response.peratio));
-        $("#ps-r").append($('<p></p>').text(response.priceSales+'x'));
-        $("#50d").append($('<p></p>').text('$'+response.movAvg50));
-        $("#200d").append($('<p></p>').text('$'+response.movAvg200));
-        $("#change").append($('<p></p>').text(response.yearHighChange));
-        $("#userprice").attr('placeholder','$'+response.price);
-    });
-}
-
-function loadSP(){
-
-}

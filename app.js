@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var names = require('./routes/userNames')
 var userSpecific = require('./routes/userNames');
 var userPortfolio = require('./routes/userPortfolio');
 var stocks = require('./routes/stockInfo');
@@ -15,6 +14,7 @@ var app = module.exports = express();
 app.engine('html', require('ejs').renderFile);
 
 // view engine setup
+app.set('etag', false);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 
