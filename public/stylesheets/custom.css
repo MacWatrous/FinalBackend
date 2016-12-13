@@ -11,18 +11,28 @@
     margin-top: 7px;
     margin: 0 auto;
     margin-bottom: 7px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#welcomebar-user {
+
 }
 #welcomebar-user p{
-
+    margin: 0;
 }
 #welcomebar-user span {
     color: #e1a701;
     font-weight:bold;
+    margin: 0;
 }
 #welcomebar-clock p {
     width: 100%;
     text-align: center;
     font-weight: bold;
+    margin: 0;
 }
 #welcomebar-logout button{
     color: white;
@@ -67,10 +77,12 @@ h4 {
 
 
 
-
 #keystats {
     height: 140px;
+    border-bottom-style: solid;
+    border-bottom-color: #2c3e50;
 }
+
 #keystats h2 {
     color: #e1a701;
 }
@@ -139,6 +151,9 @@ h4 {
 #stocksview.row div.row {
     padding-bottom: 5px;
 }
+#stocksview.row div.row:hover {
+    background-color: #34495e;
+}
 
 
 .col-md-1#companyname h5 {
@@ -168,6 +183,7 @@ h4 {
     top:80px;
     background: #2c3e50;
     margin: 0 auto;
+    border-radius: 10px 10px 10px 10px;
 }
 .popupHeader {
     text-align: center;
@@ -175,7 +191,7 @@ h4 {
     padding-top: 15px;
 }
 .popupBody label{
-    padding-left: 10px;
+    padding-right: 10px;
     padding-bottom: 5px;
 }
 .popupBody{
@@ -202,12 +218,11 @@ h4 {
     left: 0px;
     height:100%;
     width:100%;
-    background: #000;
-
+    background: rgba(0,0,0,.8);
 }
 #searchmodal {
     margin: 0 auto;
-    height: 100%;
+    height: 75%;
     width: 85%;
     z-index:1000;
     background: white;
@@ -288,9 +303,15 @@ h4 {
 
     text-align: center;
 }
+#search-graphcontainer {
+    height: 40%;
+}
 #search-input {
     width: 100%;
     height: 10%;
+}
+#search-input input{
+    padding-left: 0;
 }
 #addbtn {
     text-align:center;
