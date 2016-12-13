@@ -20,6 +20,14 @@ function searchDialog(event) {
     $('#overlayhider').show();
     console.log(searchFor);
 }
+
+$('#search_overlay').on('click', function(e){
+    e.preventDefault();
+    clearInterval(stockLoop);
+    mainLoop();
+    $('#overlayhider').hide();
+});
+
 $('#addbtn').on('click', function(e) {
     e.preventDefault();
     var today = new Date();
@@ -87,6 +95,7 @@ function findUser(event) {
             dataType: 'JSON'
         }).done(function (response2) {
             global_stockarray = response2;
+            indexGraph();
             mainLoop();
             var run = setInterval(mainLoop, 10000);
             googleLoop();
@@ -116,30 +125,42 @@ function mainLoop() {
         $("#200day").empty();
         console.log(response);
         for (var i = 0; i<response.length;i++){
-            var row = $('<div></div>').text(response[i].company).addClass('row');
+            var row = $('<div></div>').text(response[i].company).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $('#companyname').append(row);
-            var row2 = $('<div></div>').text(response[i].price).addClass('row');
+            var row2 = $('<div></div>').text(response[i].price).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#price").append(row2);
-            var row3 = $('<div></div>').text(response[i].shares).addClass('row');
+            var row3 = $('<div></div>').text(response[i].shares).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#shares").append(row3);
-            var row4 = $('<div></div>').text(response[i].positionVal).addClass('row');
+            var row4 = $('<div></div>').text(response[i].positionVal).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#positionVal").append(row4);
-            var row5 = $('<div></div>').text(response[i].returnPercent).addClass('row');
+            var row5 = $('<div></div>').text(response[i].returnPercent).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#returnPer").append(row5);
-            var row6 = $('<div></div>').text(response[i].dividendYield).addClass('row');
+            var row6 = $('<div></div>').text(response[i].dividendYield).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#dividendYield").append(row6);
-            var row7 = $('<div></div>').text(response[i].peratio).addClass('row');
+            var row7 = $('<div></div>').text(response[i].peratio).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#peratio").append(row7);
-            var row8 = $('<div></div>').text(response[i].marketCap).addClass('row');
+            var row8 = $('<div></div>').text(response[i].marketCap).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#marketcap").append(row8);
-            var row9 = $('<div></div>').text(response[i].earningsShare).addClass('row');
+            var row9 = $('<div></div>').text(response[i].earningsShare).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#eps").append(row9);
-            var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row');
+            var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#200day").append(row10);
         }
     });
 }
 
+$('body').on('click', '.entry', currentUpdate);
+
+function currentUpdate(event) {
+    event.preventDefault();
+    searchFor = $(this).attr('data-ticker');
+    console.log(searchFor);
+    graphLoop(searchFor);
+    overlayLoop();
+    stockLoop = setInterval(overlayLoop(),5000);
+    $('#overlayhider').show();
+    console.log(searchFor);
+}
 function googleLoop() {
     $.ajax({
         method: 'PUT',
@@ -167,6 +188,59 @@ function googleLoop() {
     });
 }
 
+
+
+function indexGraph(){
+    $.ajax({
+        method: 'GET',
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+        url: '/stocks'
+    }).done(function(response) {
+        var ctxGSPC = document.getElementById("myGSPCChart");
+        var ctxDJI = document.getElementById("myDJIChart");
+        var ctxIXIC = document.getElementById("myIXICChart");
+        var ctxTNX = document.getElementById("myTNXChart");
+        var ctxGLD = document.getElementById("myGLDChart");
+        var labels = [];
+        var data = [];
+        for (var i = 0;i<response.GSPC.length; i++){
+            labels.push(response.GSPC[i].date);
+            data.push(response.GSPC[i].price);
+        }
+        makeGraph(labels,data,ctxGSPC);
+        labels = [];
+        data = [];
+        for (var i = 0;i<response.DJI.length; i++){
+            labels.push(response.DJI[i].date);
+            data.push(response.DJI[i].price);
+        }
+        makeGraph(labels,data,ctxDJI);
+        labels = [];
+        data = [];
+        for (var i = 0;i<response.IXIC.length; i++){
+            labels.push(response.IXIC[i].date);
+            data.push(response.IXIC[i].price);
+        }
+        makeGraph(labels,data,ctxIXIC);
+        labels = [];
+        data = [];
+        for (var i = 0;i<response.TNX.length; i++){
+            labels.push(response.TNX[i].date);
+            data.push(response.TNX[i].price);
+        }
+        makeGraph(labels,data,ctxTNX);
+        labels = [];
+        data = [];
+        for (var i = 0;i<response.GLD.length; i++){
+            labels.push(response.GLD[i].date);
+            data.push(response.GLD[i].price);
+        }
+        makeGraph(labels,data,ctxGLD);
+    });
+}
+
+
 function graphLoop(stock) {
     $.ajax({
         method: 'GET',
@@ -180,12 +254,12 @@ function graphLoop(stock) {
             labels.push(response.historical[i].date);
             data.push(response.historical[i].price);
         }
-        makeGraph(labels,data);
+        var ctx = document.getElementById("myChart");
+        makeGraph(labels,data,ctx);
     });
 }
-var ctx = document.getElementById("myChart");
 
-function makeGraph(labels, data){
+function makeGraph(labels, data,ctx){
     var backgroundColor = [];
     var borderColor = [];
     for (var i = labels.length;i>0;i--){

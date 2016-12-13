@@ -202,5 +202,73 @@ router.put('/', function(req, res, next) {
     });
 });
 
+//get historic data
+router.get('/', function(req, res, next) {
+    var today = new Date();
+    var lastYear = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    var lessMonth = today.getMonth()+1-6;
+    var lessYear = yyyy;
+    if (lessMonth <1){
+        if (lessMonth == 0){
+            lessMonth = 12;
+            lessYear = yyyy-1;
+        }
+        else {
+            lessMonth = 12+lessMonth
+            lessYear = yyyy-1;
+        }
+    }
+    if(dd<10) {
+        dd='0'+dd
+    }
+
+    if (lessMonth<10){
+        lessMonth='0'+lessMonth;
+    }
+    if(mm<10) {
+        mm='0'+mm
+    }
+    today = yyyy+'-'+ mm +'-'+dd;
+    lastYear = lessYear+'-'+ lessMonth +'-'+dd;
+    var yqlText = 'select * from yahoo.finance.historicaldata where symbol in (\"^GSPC\",\"^DJI\",\"^IXIC\",\"^TNX\",\"GLD\") and startDate = \"' + lastYear + '\" and endDate = \"' + today + '\"';
+    var query = new YQL(yqlText);
+    query.exec(function (error, response) {
+        //console.log(response.query.results.quote);
+        response = response.query.results.quote;
+        var historicalGSPC = [];
+        var historicalDJI = [];
+        var historicalIXIC = [];
+        var historicalTNX = [];
+        var historicalGLD = [];
+        for (var i =0;i<response.length;i++){
+            if (response[i].Symbol == '%5eGSPC'){
+                historicalGSPC.push({price: response[i].Close, date:response[i].Date});
+            }
+            if (response[i].Symbol == '%5eDJI'){
+                historicalDJI.push({price: response[i].Close, date:response[i].Date});
+            }
+            if (response[i].Symbol == '%5eIXIC'){
+                historicalIXIC.push({price: response[i].Close, date:response[i].Date});
+            }
+            if (response[i].Symbol == '%5eTNX'){
+                historicalTNX.push({price: response[i].Close, date:response[i].Date});
+            }
+            if (response[i].Symbol == '%GLD'){
+                historicalGLD.push({price: response[i].Close, date:response[i].Date});
+            }
+        }
+        var result = {
+            GSPC: historicalGSPC,
+            DJI: historicalDJI,
+            IXIC: historicalIXIC,
+            TNX: historicalTNX,
+            GLD: historicalGLD
+        };
+        res.json(result);
+    });
+});
 
 module.exports = router;
