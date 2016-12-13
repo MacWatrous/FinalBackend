@@ -38,14 +38,14 @@
     <div id="searchmodal">
 
         <div class="row" id="search-header">
-            <div class="col-md-2" id="name"> <!-- This column will have Company name -->
+            <div class="col-md-3" id="name"> <!-- This column will have Company name -->
                 <h1>Yahoo</h1>
             </div>
             <div class="col-md-2" id="ticker"> <!-- This column will have Ticker -->
                 <h4>YHOO</h4>
             </div>
-            <div class="col-md-8" id="exchangeimg"> <!-- This column will have Exchange img. -->
-                <h6></h6>
+            <div class="col-md-7" id="exchangeimg"> <!-- This column will have Exchange img. -->
+                <span style="width:100px;height:75px;background-color:white;"></span>
             </div>
         </div>
 
@@ -55,13 +55,12 @@
         <div class="col-md-1">  <h5>52-wk High</h5></div>
         <div class="col-md-1">  <h5>Market Cap</h5></div>
         <div class="col-md-1">  <h5>Dividend Yield</h5></div>
-        <div class="col-md-1">  <h5>Beta</h5></div>
+        <div class="col-md-1">  <h5>Earnings</h5></div>
         <div class="col-md-1">  <h5>PE Ratio</h5></div>
         <div class="col-md-1">  <h5>Price/Sales Ratio</h5></div>
-        <div class="col-md-1">  <h5>50-day Moving Avg.</h5></div>
-        <div class="col-md-1">  <h5>200-day Moving Avg.</h5></div>
+        <div class="col-md-2">  <h5>50-day Moving Avg.</h5></div>
+        <div class="col-md-2">  <h5>200-day Moving Avg.</h5></div>
         <div class="col-md-1">  <h5>% &Delta; from Year High</h5></div>
-        <div class="col-md-1">  <h5>Exchange</h5></div>
     </div>
 
     <div class="row" id="search-statline">
@@ -72,10 +71,9 @@
         <div class="col-md-1" id="earnings">    <p>$5.00</p></div>
         <div class="col-md-1" id="pe-r">        <p>17.00x</p></div>
         <div class="col-md-1" id="ps-r">        <p>3.00x</p></div>
-        <div class="col-md-1" id="50d">         <p>$90.00</p></div>
-        <div class="col-md-1" id="200d">        <p>$80.00</p></div>
+        <div class="col-md-2" id="50d">         <p>$90.00</p></div>
+        <div class="col-md-2" id="200d">        <p>$80.00</p></div>
         <div class="col-md-1" id="change">      <p>-10.00%</p></div>
-        <div class="col-md-1" id="exchange">    <p>NASD</p></div>
     </div>
 
 
@@ -158,7 +156,7 @@
             </div>
         </div>
         <div class="col-xs-3 rightspan ">
-            <div class="pull-right" id="pie" style="height:225px; width:225px;"></div>
+            <canvas id="myChartPie" width="150" height="150"></canvas>
         </div>
     </div>
     <div class="row">

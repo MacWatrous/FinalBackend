@@ -137,26 +137,27 @@ h4 {
 }
 
 #search-header{
-    position: relative;
     width: 100%;
-    height: 25%;
+    height: 15%;
 }
 
-#name.col-md-2 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+#name {
+    height: 70px;
+
+    display: table-cell;
+    vertical-align: bottom;
 }
 
 #ticker {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-color: green;
+    height: 70px;
 
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 #exchangeimg {
+    float: right;
 
 }
 
@@ -166,19 +167,33 @@ h4 {
     width: 100%;
     margin: 0 auto;
 
-    border-bottom: thick;
+}
 
-    text-align: center;
+#search-statlinehearder.row {
+    border-bottom-style: solid;
+}
+
+#search-statlineheader h5 {
+    width: 125%;
+
+    border-style: solid;
+
     font-size: 90%;
     font-weight: bold;
+    text-align: center;
 }
 
 #search-statline {
     width: 100%;
     margin: 0 auto;
+}
 
-    font-size: 70%;
+#search-statline p {
+    font-size: 80%;
+
     text-align: center;
+
+    border-right-style: solid;
 }
 
 
