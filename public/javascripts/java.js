@@ -94,7 +94,7 @@ $('#addbtn').on('click', function(e) {
         global_stockarray.stocks.push({stockTicker: response.stockTicker,
             purchaseDate: response.purchaseDate,
             purchasePrice: response.purchasePrice,
-            purchaseAmount: response.purchaseAmount,
+            purchaseAmount: parseInt(response.purchaseAmount),
             exchange: response.exchange});
         console.log(global_stockarray);
         clearInterval(stockLoop);
@@ -241,8 +241,8 @@ function mainLoop() {
             var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#200day").append(row10);
         }
-        $('#portfoliovalue').append($('<small></small>').text(sum.toFixed(2)));
-        $('#portfolioreturn').append($('<small></small>').text(dolReturn.toFixed(2)));
+        $('#portfoliovalue').text("Value: ").append($('<small></small>').text(sum.toFixed(2)));
+        $('#portfolioreturn').text("Return: ").append($('<small></small>').text(dolReturn.toFixed(2)));
         if (runCount2 == 0){
             mainGraph();
         }
