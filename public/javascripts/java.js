@@ -13,6 +13,8 @@ var run2;
 var mainTable;
 var exchange;
 var frontGraph;
+var price = 0;
+var shares = 0;
 
 function startTime() {
     var today = new Date();
@@ -42,6 +44,18 @@ function checkTime(i) {
     return i;
 }
 
+$( "#userprice" ).keyup(function() {
+    price = $( "#userprice" ).val();
+    shares = $("#usershares").val();
+    $('#totalcost').text('$'+price*shares);
+});
+
+$( "#usershares" ).keyup(function() {
+    shares = $("#usershares").val();
+    price = $( "#userprice" ).val();
+    $('#totalcost').text('$'+price*shares);
+});
+
 $('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
@@ -50,7 +64,6 @@ function searchDialog(event) {
     overlayLoop();
     stockLoop = setInterval(overlayLoop(),5000);
     $('#overlayhider').show();
-    console.log(searchFor);
 }
 
 $('#search_overlay').on('click', function(e){
@@ -83,7 +96,6 @@ $('#addbtn').on('click', function(e) {
         purchaseAmount: $('#usershares').val(),
         exchange: exchange
     };
-    console.log(payload);
     $.ajax({
         method: 'POST',
         data: JSON.stringify(payload),
@@ -191,7 +203,12 @@ function currentUpdate(event) {
     overlayLoop();
     stockLoop = setInterval(overlayLoop(),5000);
     $('#overlayhider').show();
-    console.log(searchFor);
+}
+
+$('#welcomebar-logout').on('click', logout);
+function logout(event) {
+    event.preventDefault();
+    window.location.reload();
 }
 
 function mainLoop() {
@@ -336,7 +353,7 @@ function overlayLoop(){
         $("#50d").append($('<p></p>').text('$'+response.movAvg50));
         $("#200d").append($('<p></p>').text('$'+response.movAvg200));
         $("#change").append($('<p></p>').text(response.yearHighChange));
-        $("#userprice").attr('placeholder','$'+response.price);
+        $("#userprice").attr('placeholder',response.price);
     });
 }
 

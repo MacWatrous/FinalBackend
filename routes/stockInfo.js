@@ -108,7 +108,6 @@ router.post('/', function(req, res, next) {
                     earningsShare: response[i].EarningsShare,
                     peratio: pes[i]
                 };
-                console.log(stock);
                 stockArray.push(stock);
             }
             res.json(stockArray);
@@ -247,7 +246,7 @@ router.get('/', function(req, res, next) {
             lessYear = yyyy-1;
         }
         else {
-            lessMonth = 12+lessMonth;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            lessMonth = 12+lessMonth;
             lessYear = yyyy-1;
         }
     }
