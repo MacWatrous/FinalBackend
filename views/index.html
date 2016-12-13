@@ -36,8 +36,9 @@
 <div id="overlayhider" style="display:none;">
     <div id="search_overlay">
     <div id="searchmodal">
+
         <div class="row" id="search-header">
-            <div class="col-md-2" id="companyname"> <!-- This column will have Company name -->
+            <div class="col-md-2" id="name"> <!-- This column will have Company name -->
                 <h1>Yahoo</h1>
             </div>
             <div class="col-md-2" id="ticker"> <!-- This column will have Ticker -->
@@ -47,9 +48,6 @@
                 <h6></h6>
             </div>
         </div>
-
-        <canvas id="myChart" width="400" height="175"></canvas>
-
 
 
     <div class="row" id="search-statlineheader">
@@ -81,22 +79,25 @@
     </div>
 
 
+    <canvas id="myChart" width="400" height="175"></canvas>
+
+
     <div class="row" id="search-input">
         <div class="col-md-2">
             <label>User Price:</label> <input type="text" id="userprice" placeholder="$0.00">
         </div>
+
         <div class="col-md-2">
             <label>Shares:</label> <input type="text" id="usershares" placeholder="0">
         </div>
 
         <div class="col-md-4">
-
+            <label>Total Cost:</label> <span id="totalcost"></span>
         </div>
 
         <div class="col-md-4" id="addbtn">
             <button>Add to Portfolio</button>
         </div>
-
     </div>
 
 
@@ -277,6 +278,7 @@
             <button id="searchbtn">Search</button>
         </div>
     </div>
+</div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
