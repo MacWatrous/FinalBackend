@@ -6,6 +6,7 @@ var global_username;
 var global_stockarray;
 var searchFor;
 var runCount = 0;
+var runCount2 = 0;
 var stockLoop;
 var mainTable;
 var exchange;
@@ -26,6 +27,9 @@ $('#search_overlay').on('click', function(e){
     clearInterval(stockLoop);
     mainLoop();
     $('#overlayhider').hide();
+
+}).find('#searchmodal').on('click', function (e) {
+    e.stopPropagation();
 });
 
 $('#addbtn').on('click', function(e) {
@@ -146,6 +150,10 @@ function mainLoop() {
             var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#200day").append(row10);
         }
+        if (runCount2 == 0){
+            mainGraph();
+        }
+        runCount2++;
     });
 }
 
@@ -181,7 +189,6 @@ function googleLoop() {
         if (runCount == 0){
             $(function(){
                 $("ul#ticker01").liScroll();
-                mainGraph();
             });
         }
         runCount++;
@@ -279,13 +286,20 @@ function makeGraph(labels, data,ctx){
             }]
         },
         options: {
+            legend: {
+                display: false
+            },
             //maintainAspectRatio: true,
             scales: {
                 yAxes: [{
                     //barThickness:200,
                     ticks: {
                         //beginAtZero:true
-                    }
+                    },
+                    //display: false
+                }],
+                xAxes: [{
+                    display: false
                 }]
             }
         }
