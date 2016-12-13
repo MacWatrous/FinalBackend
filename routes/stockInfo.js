@@ -65,7 +65,7 @@ router.post('/', function(req, res, next) {
             else
                 dividends.push(response[i].DividendYield)
             if (response[i].PERatio == null){
-                pes.push('no data');
+                pes.push('-');
             }
             else
                 pes.push(response[i].PERatio);
@@ -79,7 +79,7 @@ router.post('/', function(req, res, next) {
                 returnDol: shareN[tracker[i]]*asks[i]-startVal[tracker[i]],
                 returnPercent: (shareN[tracker[i]]*asks[i])/startVal[tracker[i]],
                 dividendYield: dividends[i],
-                marketCap: response[i].marketCapitalization,
+                marketCap: response[i].MarketCapitalization,
                 movAvg200 : response[i].TwoHundreddayMovingAverage,
                 earningsShare: response[i].EarningsShare,
                 peratio: pes[i]

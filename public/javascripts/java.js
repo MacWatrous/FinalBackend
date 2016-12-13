@@ -8,12 +8,14 @@ var searchFor;
 var runCount = 0;
 var stockLoop;
 var mainTable;
+var exchange;
 
 $('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
     searchFor = $('#searchinput').val();
     graphLoop(searchFor);
+    overlayLoop();
     stockLoop = setInterval(overlayLoop(),5000);
     $('#overlayhider').show();
     console.log(searchFor);
@@ -36,7 +38,7 @@ $('#addbtn').on('click', function(e) {
         purchasePrice: $('#userprice').val(),
         purchaseDate: today,
         purchaseAmount: $('#usershares').val(),
-        exchange: "NYSE"
+        exchange: exchange
     };
     console.log(payload);
     $.ajax({
@@ -111,7 +113,8 @@ function mainLoop() {
         $('#peratio').empty();
         $("#marketcap").empty();
         $("#eps").empty();
-
+        $("#200day").empty();
+        console.log(response);
         for (var i = 0; i<response.length;i++){
             var row = $('<div></div>').text(response[i].company).addClass('row');
             $('#companyname').append(row);
@@ -131,6 +134,8 @@ function mainLoop() {
             $("#marketcap").append(row8);
             var row9 = $('<div></div>').text(response[i].earningsShare).addClass('row');
             $("#eps").append(row9);
+            var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row');
+            $("#200day").append(row10);
         }
     });
 }
@@ -213,6 +218,15 @@ function makeGraph(labels, data){
     });
 }
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 var ctx2 = document.getElementById("myChartPie");
 
 function mainGraph(){
@@ -220,14 +234,20 @@ function mainGraph(){
     var borderColor = [];
     var labels = [];
     var data = [];
+    var increase = 100;
+    var increase2 = 200;
+    var tempColor;
     for (var i = 0;i<mainTable.length; i++){
+        increase += 20;
+        increase2 +=10;
         labels.push(mainTable[i].company);
         data.push(mainTable[i].positionVal);
-        backgroundColor.push('rgba('+100+','+i+40+','+i+25+',0.8'+')');
-        borderColor.push('rgba('+100+','+i+40+','+i+25+',1'+')');
+        tempColor = getRandomColor();
+        backgroundColor.push(tempColor);
+        borderColor.push(tempColor);
     }
     var myChartPie = new Chart(ctx2, {
-        type: 'polarArea',
+        type: 'pie',
         data: {
             labels: labels,
             datasets: [{
@@ -239,11 +259,14 @@ function mainGraph(){
             }]
         },
         options: {
-            startAngle: -.70,
-            //maintainAspectRatio: true,
-            scales: {
+            legend: {
                 display: false
-            }
+            },
+            scale: {
+                //lineArc: false,
+                //display: false
+            },
+            startAngle: -.70,
         }
     });
 }
@@ -284,10 +307,18 @@ function overlayLoop(){
         $("#50d").empty();
         $("#200d").empty();
         $("#change").empty();
-        $("#exchange").empty();
+        $("#exchangeimg").empty();
         $("#name").empty();
         $("#ticker").empty();
 
+        if (response.exchange=='NYSE'){
+            exchange = 'NYSE';
+            $("#exchangeimg").append($('<img>').attr('src','images/NYSE.png').css('width','100px'));
+        }
+        else {
+            exchange = 'NASDAQ';
+            $("#exchangeimg").append($('<img>').attr('src','images/Nasdaq.png').css('width','100px'));
+        }
         $("#name").append($('<h1></h1>').text(response.company));
         $("#ticker").append($('<h4></h4>').text(response.stockTicker));
         $("#52wk-L").append($('<p></p>').text('$'+response.weekLow52));
@@ -300,7 +331,6 @@ function overlayLoop(){
         $("#50d").append($('<p></p>').text('$'+response.movAvg50));
         $("#200d").append($('<p></p>').text('$'+response.movAvg200));
         $("#change").append($('<p></p>').text(response.yearHighChange));
-        $("#exchange").append($('<p></p>').text(response.exchange));
         $("#userprice").attr('placeholder','$'+response.price);
     });
 }
