@@ -8,6 +8,8 @@ var searchFor;
 var runCount = 0;
 var runCount2 = 0;
 var stockLoop;
+var run;
+var run2;
 var mainTable;
 var exchange;
 
@@ -67,12 +69,48 @@ $('#addbtn').on('click', function(e) {
             exchange: response.exchange});
         console.log(global_stockarray);
         clearInterval(stockLoop);
+        clearInterval(run);
+        clearInterval(run2);
         mainLoop();
-        mainGraph();
+        run = setInterval(mainLoop, 10000);
+        googleLoop();
+        run2 = setInterval(googleLoop, 100000)
         $('#overlayhider').hide();
     });
 });
 
+$('#register').on('click', addUser);
+
+
+function addUser(event) {
+    event.preventDefault();
+
+    $("#overlay").hide(1000);
+
+    var username = $('#username').val();
+    var payload = {
+        cash: '0'
+    };
+
+    $.ajax({
+        type:'POST',
+        data: JSON.stringify(payload),
+        url: '/users/names/' + username,
+        dataType: 'JSON',
+        contentType: 'application/json; charset=UTF-8',
+    }).done(function(response) {
+        console.log(response);
+        global_ID = response.id;
+        global_cash = response.cash;
+        global_username = response.username;
+        var array = [];
+        global_stockarray = {
+            id: ''+global_ID,
+            stocks: array
+        };
+        indexGraph();
+    });
+}
 
 $('#findUser').on('click', findUser);
 
@@ -99,16 +137,18 @@ function findUser(event) {
             dataType: 'JSON'
         }).done(function (response2) {
             global_stockarray = response2;
+            console.log(global_stockarray);
             indexGraph();
             mainLoop();
-            var run = setInterval(mainLoop, 10000);
+            run = setInterval(mainLoop, 10000);
             googleLoop();
-            var run2 = setInterval(googleLoop, 100000)
+            run2 = setInterval(googleLoop, 100000)
         });
     });
 }
 
 function mainLoop() {
+    console.log(global_stockarray);
     $.ajax({
         method: 'POST',
         data: JSON.stringify(global_stockarray),

@@ -55,38 +55,64 @@ router.post('/', function(req, res, next) {
     var query = new YQL(yqlText);
     query.exec(function (error, response) {
         response = response.query.results.quote;
-        for (var i =0;i<response.length;i++){
-            //handle having multiple entries for same stock..?
-            asks.push(response[i].LastTradePriceOnly);
-            names.push(response[i].Name);
-            if (response[i].DividendYield == null){
-                dividends.push(0);
+        if (response.length == undefined){
+            if (response.PERatio == null){
+                pes = '-';
             }
             else
-                dividends.push(response[i].DividendYield)
-            if (response[i].PERatio == null){
-                pes.push('-');
-            }
-            else
-                pes.push(response[i].PERatio);
-
+                pes = response.PERatio;
             var stock = {
-                stockTicker: cumulativeArray[i],
-                company: names[i],
-                price: asks[i],
-                shares: shareN[tracker[i]],
-                positionVal: shareN[tracker[i]]*asks[i],
-                returnDol: shareN[tracker[i]]*asks[i]-startVal[tracker[i]],
-                returnPercent: (shareN[tracker[i]]*asks[i])/startVal[tracker[i]],
-                dividendYield: dividends[i],
-                marketCap: response[i].MarketCapitalization,
-                movAvg200 : response[i].TwoHundreddayMovingAverage,
-                earningsShare: response[i].EarningsShare,
-                peratio: pes[i]
+                stockTicker: stockTable[0].stockTicker,
+                company: response.Name,
+                price: response.LastTradePriceOnly,
+                shares: shareN[tracker[0]],
+                positionVal: shareN[tracker[0]]*response.LastTradePriceOnly,
+                returnDol: shareN[tracker[0]]*response.LastTradePriceOnly-startVal[tracker[0]],
+                returnPercent: (shareN[tracker[0]]*response.LastTradePriceOnly)/startVal[tracker[0]],
+                dividendYield: response.DividendYield,
+                marketCap: response.MarketCapitalization,
+                movAvg200 : response.TwoHundreddayMovingAverage,
+                earningsShare: response.EarningsShare,
+                peratio: pes
             };
             stockArray.push(stock);
+            res.json(stockArray)
         }
-        res.json(stockArray);
+
+        else{
+            for (var i =0;i<response.length;i++){
+                //handle having multiple entries for same stock..?
+                asks.push(response[i].LastTradePriceOnly);
+                names.push(response[i].Name);
+                if (response[i].DividendYield == null){
+                    dividends.push(0);
+                }
+                else
+                    dividends.push(response[i].DividendYield)
+                if (response[i].PERatio == null){
+                    pes.push('-');
+                }
+                else
+                    pes.push(response[i].PERatio);
+
+                var stock = {
+                    stockTicker: cumulativeArray[i],
+                    company: names[i],
+                    price: asks[i],
+                    shares: shareN[tracker[i]],
+                    positionVal: shareN[tracker[i]]*asks[i],
+                    returnDol: shareN[tracker[i]]*asks[i]-startVal[tracker[i]],
+                    returnPercent: (shareN[tracker[i]]*asks[i])/startVal[tracker[i]],
+                    dividendYield: dividends[i],
+                    marketCap: response[i].MarketCapitalization,
+                    movAvg200 : response[i].TwoHundreddayMovingAverage,
+                    earningsShare: response[i].EarningsShare,
+                    peratio: pes[i]
+                };
+                stockArray.push(stock);
+            }
+            res.json(stockArray);
+        }
     });
 });
 
@@ -98,6 +124,10 @@ router.get('/:ticker', function(req, res, next) {
     var query = new YQL(yqlText);
     query.exec(function (error, response) {
         //console.log(response.query.results.quote);
+        if (error){
+            res.json('');
+            return;
+        }
         response = response.query.results.quote;
         var dividends = 0;
         var exchange ='';
@@ -237,6 +267,10 @@ router.get('/', function(req, res, next) {
     var query = new YQL(yqlText);
     query.exec(function (error, response) {
         //console.log(response.query.results.quote);
+        if (error){
+            res.json('');
+            return;
+        }
         response = response.query.results.quote;
         var historicalGSPC = [];
         var historicalDJI = [];
