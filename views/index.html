@@ -37,65 +37,69 @@
     <div id="search_overlay">
     <div id="searchmodal">
         <div class="row" id="search-header">
-            <div class="col-md-4"> <!-- This column will have Company name -->
+            <div class="col-md-2" id="companyname"> <!-- This column will have Company name -->
                 <h1>Yahoo</h1>
             </div>
-            <div class="col-md-2"> <!-- This column will have Ticker -->
+            <div class="col-md-2" id="ticker"> <!-- This column will have Ticker -->
                 <h4>YHOO</h4>
             </div>
-            <div class="col-md-6"> <!-- This column will have Exchange img. -->
+            <div class="col-md-8" id="exchangeimg"> <!-- This column will have Exchange img. -->
                 <h6></h6>
             </div>
-
-            <canvas id="myChart" width="400" height="175"></canvas>
         </div>
+
+        <canvas id="myChart" width="400" height="175"></canvas>
+
+
+
+    <div class="row" id="search-statlineheader">
+        <div class="col-md-1">  <h5>52-wk Low</h5></div>
+        <div class="col-md-1">  <h5>52-wk High</h5></div>
+        <div class="col-md-1">  <h5>Market Cap</h5></div>
+        <div class="col-md-1">  <h5>Dividend Yield</h5></div>
+        <div class="col-md-1">  <h5>Beta</h5></div>
+        <div class="col-md-1">  <h5>PE Ratio</h5></div>
+        <div class="col-md-1">  <h5>Price/Sales Ratio</h5></div>
+        <div class="col-md-1">  <h5>50-day Moving Avg.</h5></div>
+        <div class="col-md-1">  <h5>200-day Moving Avg.</h5></div>
+        <div class="col-md-1">  <h5>% &Delta; from Year High</h5></div>
+        <div class="col-md-1">  <h5>Exchange</h5></div>
     </div>
 
     <div class="row" id="search-statline">
-        <div class="col-md-1"><h5> </h5></div>
-        <div class="col-md-1"><h5>52-wk Low</h5></div>
-        <div class="col-md-1"><h5>52-wk High</h5></div>
-        <div class="col-md-1"><h5>Market Cap</h5></div>
-        <div class="col-md-1"><h5>Dividend Yield</h5></div>
-        <div class="col-md-1"><h5>Beta</h5></div>
-        <div class="col-md-1"><h5>PE Ratio</h5></div>
-        <div class="col-md-1"><h5>Price/Sales Ratio</h5></div>
-        <div class="col-md-1"><h5>50-day Moving Avg.</h5></div>
-        <div class="col-md-1"><h5>200-day Moving Avg.</h5></div>
-        <div class="col-md-1"><h5>% &Delta; from Year High</h5></div>
-        <div class="col-md-1"><h5>Exchange</h5></div>
+        <div class="col-md-1" id="52wk-L">      <p>$50</p></div>
+        <div class="col-md-1" id="52wk-H">      <p>$150</p></div>
+        <div class="col-md-1" id="mktcap">      <p>$50.00B</p></div>
+        <div class="col-md-1" id="dividend">    <p>2.00%</p></div>
+        <div class="col-md-1" id="earnings">    <p>$5.00</p></div>
+        <div class="col-md-1" id="pe-r">        <p>17.00x</p></div>
+        <div class="col-md-1" id="ps-r">        <p>3.00x</p></div>
+        <div class="col-md-1" id="50d">         <p>$90.00</p></div>
+        <div class="col-md-1" id="200d">        <p>$80.00</p></div>
+        <div class="col-md-1" id="change">      <p>-10.00%</p></div>
+        <div class="col-md-1" id="exchange">    <p>NASD</p></div>
     </div>
 
-    <div class="row">
-        <div class="col-md-1"><p>$ </p></div>
-        <div class="col-md-1"><p>$50</p></div>
-        <div class="col-md-1"><p>$150</p></div>
-        <div class="col-md-1"><p>$50.00B</p></div>
-        <div class="col-md-1"><p>2.00%</p></div>
-        <div class="col-md-1"><p>1.10</p></div>
-        <div class="col-md-1"><p>17.00x</p></div>
-        <div class="col-md-1"><p>3.00x</p></div>
-        <div class="col-md-1"><p>$90.00</p></div>
-        <div class="col-md-1"><p>$80.00</p></div>
-        <div class="col-md-1"><p>-10.00%</p></div>
-        <div class="col-md-1"><p>NASD</p></div>
-    </div>
 
-    <div class="row" id="pricehistory">
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <label id="userprice">User Price:</label> <input type="text" name="userprice" class="userprice"
-                                                             placeholder="$0.00">
+    <div class="row" id="search-input">
+        <div class="col-md-2">
+            <label>User Price:</label> <input type="text" id="userprice" placeholder="$0.00">
         </div>
-        <div class="col-md-6">
-            <label>Total Cost:</label> <span class="totalamount"></span>
+        <div class="col-md-2">
+            <label>Shares:</label> <input type="text" id="usershares" placeholder="0">
         </div>
+
+        <div class="col-md-4">
+
+        </div>
+
+        <div class="col-md-4" id="addbtn">
+            <button>Add to Portfolio</button>
+        </div>
+
     </div>
 
-    <div class="row" id="addbtn">
-        <button>Add to Portfolio</button>
+
     </div>
     </div>
 
