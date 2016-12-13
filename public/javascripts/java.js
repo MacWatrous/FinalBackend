@@ -124,7 +124,7 @@ function addUser(event) {
         data: JSON.stringify(payload),
         url: '/users/names/' + username,
         dataType: 'JSON',
-        contentType: 'application/json; charset=UTF-8',
+        contentType: 'application/json; charset=UTF-8'
     }).done(function(response) {
         console.log(response);
         global_ID = response.id;
@@ -166,6 +166,7 @@ function findUser(event) {
             url: '/users/portfolio/' + global_ID,
             dataType: 'JSON'
         }).done(function (response2) {
+            console.log(response2);
             global_stockarray = response2;
             console.log(global_stockarray);
             indexGraph('start');
@@ -198,7 +199,6 @@ function mainLoop() {
         $("#200day").empty();
         $('#portfoliovalue').empty();
         $('#portfolioreturn').empty();
-        console.log(response);
         var sum = 0;
         var dolReturn = 0;
         for (var i = 0; i<response.length;i++){
