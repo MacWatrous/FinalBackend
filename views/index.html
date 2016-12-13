@@ -13,14 +13,16 @@
     <link type="text/css" rel="stylesheet" href="stylesheets/li-scroller.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
-
-
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
 </head>
+
 <body>
 <div id="overlay">
     <div id="loginmodal" class="popupContainer">
         <header class="popupHeader">
-            <h1>User Login</h1>
+            <img src="images/PortHolLogo.png" style="width:190px;">
         </header>
 
         <div class="popupBody">
@@ -28,6 +30,7 @@
                 <label for="username">Username:</label><input type="text" name="username" id="username"><br>
                 <label for="password">Password:</label><input type="password" name="password" id="password"><br>
                 <button id="findUser">Log in</button>
+                <button id="register">Register</button>
             </fieldset>
         </div>
     </div>
@@ -81,19 +84,19 @@
 
 
     <div class="row" id="search-input">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label>User Price:</label> <input type="text" id="userprice" placeholder="$0.00">
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label>Shares:</label> <input type="text" id="usershares" placeholder="0">
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Total Cost:</label> <span id="totalcost"></span>
         </div>
 
-        <div class="col-md-4" id="addbtn">
+        <div class="col-md-3" id="addbtn">
             <button>Add to Portfolio</button>
         </div>
     </div>
@@ -102,6 +105,18 @@
     </div>
     </div>
 
+</div>
+
+<div class="row" id="welcomebar">
+    <div class="col-md-3" id="welcomebar-user">
+        <p>Hello Username</p>
+    </div>
+    <div class="col-md-6" id="welcomebar-clock">
+        <p>PUT TIME HERE</p>
+    </div>
+    <div class="col-md-3" id="welcomebar-logout">
+        <button class="pull-right">Log out</button>
+    </div>
 </div>
 
 
@@ -146,7 +161,7 @@
             </div>
             <div class="col-xs-6">
                 <ul>
-                    <li>Beta:
+                    <li>Cash:
                         <small>6</small>
                     </li>
                     <li>PE:
@@ -237,7 +252,7 @@
             <div class="row"><h5>2.5%</h5></div>
         </div>
 
-        <div class="col-md-1" id="beta">
+        <div class="col-md-1" id="eps">
             <div class="row"><h5>1.1</h5></div>
             <div class="row"><h5>1.2</h5></div>
             <div class="row"><h5>0.8</h5></div>
@@ -249,13 +264,13 @@
             <div class="row"><h5>9</h5></div>
         </div>
 
-        <div class="col-md-1" id="sector">
+        <div class="col-md-1" id="marketcap">
             <div class="row"><h5>Consumer Staples</h5></div>
             <div class="row"><h5>Consumer Staples</h5></div>
             <div class="row"><h5>Consumer Staples</h5></div>
         </div>
 
-        <div class="col-md-1" id="industry">
+        <div class="col-md-1" id="200day">
             <div class="row"><h5>Grocery</h5></div>
             <div class="row"><h5>Pharmacy</h5></div>
             <div class="row"><h5>Retail</h5></div>
