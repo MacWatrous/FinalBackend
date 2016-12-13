@@ -444,6 +444,7 @@ function indexGraph(selected){
 
 function makeGraph(labels, data,ctx){
     data.reverse();
+    labels.reverse();
     var backgroundColor = [];
     var borderColor = [];
     for (var i = labels.length;i>0;i--){
