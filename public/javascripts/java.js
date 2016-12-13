@@ -169,7 +169,7 @@ function searchDialog(event) {
     event.preventDefault();
     searchFor = $('#searchinput').val();
     graphLoop(searchFor);
-    stockLoop = setInterval(overlayLoop(),1000);
+    stockLoop = setInterval(overlayLoop(),5000);
     $('#overlayhider').show();
     console.log(searchFor);
 }

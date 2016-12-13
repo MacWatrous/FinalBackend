@@ -94,7 +94,7 @@ router.post('/', function(req, res, next) {
 router.get('/:ticker', function(req, res, next) {
     var stockTicker = req.params.ticker;
     stockTicker = stockTicker.toUpperCase();
-    var yqlText = 'select * from yahoo.finance.quotes where symbol in (\"'+ stockTicker + '\")';
+    var yqlText = 'env \'store://datatables.org/alltableswithkeys\'; select * from yahoo.finance.quotes where symbol in (\"'+ stockTicker + '\")';
     var query = new YQL(yqlText);
     query.exec(function (error, response) {
         //console.log(response.query.results.quote);
@@ -152,7 +152,6 @@ router.get('/:ticker', function(req, res, next) {
         var yqlText2 = 'select * from yahoo.finance.historicaldata where symbol = \"'+ stockTicker + '\" and startDate = \"' + lastYear + '\" and endDate = \"' + today + '\"';
         var query2 = new YQL(yqlText2);
         query2.exec(function (error, response) {
-            console.log(response);
             response = response.query.results.quote;
             var historical = [];
             for (var i =0;i<response.length;i++){
