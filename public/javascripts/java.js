@@ -13,6 +13,32 @@ var run2;
 var mainTable;
 var exchange;
 
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var time = 'am';
+    h = parseInt(h);
+    if (h==0){
+        h = 12;
+    }
+    else if (h==12){
+        time = 'pm';
+    }
+    else if (h>12){
+        h = h-12;
+        time = 'pm';
+    }
+    m = checkTime(m);
+    $('#welcomebar-clock').empty();
+    $('#welcomebar-clock').append($('<p></p>').text(h + ":" + m + time));
+    var t = setTimeout(startTime, 10000);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
 $('#searchbtn').on('click', searchDialog);
 function searchDialog(event) {
     event.preventDefault();
@@ -103,6 +129,8 @@ function addUser(event) {
         global_ID = response.id;
         global_cash = response.cash;
         global_username = response.username;
+        $('#welcomebar-user').empty();
+        $('#welcomebar-user').append($('<p></p>').text("Hello ").append($('<span></span>').text(global_username)));
         var array = [];
         global_stockarray = {
             id: ''+global_ID,
@@ -130,7 +158,8 @@ function findUser(event) {
         global_ID = response.id;
         global_cash = response.cash;
         global_username = response.username;
-
+        $('#welcomebar-user').empty();
+        $('#welcomebar-user').append($('<p></p>').text("Hello ").append($('<span></span>').text(global_username)));
         $.ajax({
             type: 'GET',
             url: '/users/portfolio/' + global_ID,
@@ -175,9 +204,9 @@ function mainLoop() {
             $("#price").append(row2);
             var row3 = $('<div></div>').text(response[i].shares).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#shares").append(row3);
-            var row4 = $('<div></div>').text(response[i].positionVal).addClass('row entry').attr('data-ticker',response[i].stockTicker);
+            var row4 = $('<div></div>').text(response[i].positionVal.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#positionVal").append(row4);
-            var row5 = $('<div></div>').text(response[i].returnPercent).addClass('row entry').attr('data-ticker',response[i].stockTicker);
+            var row5 = $('<div></div>').text(response[i].returnPercent.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#returnPer").append(row5);
             var row6 = $('<div></div>').text(response[i].dividendYield).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#dividendYield").append(row6);
