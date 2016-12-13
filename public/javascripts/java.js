@@ -76,6 +76,13 @@ $('#search_overlay').on('click', function(e){
     e.stopPropagation();
 });
 
+$('#close').on('click', function(e){
+    e.preventDefault();
+    clearInterval(stockLoop);
+    mainLoop();
+    $('#overlayhider').hide();
+});
+
 $('#addbtn').on('click', function(e) {
     e.preventDefault();
     var today = new Date();
@@ -108,7 +115,6 @@ $('#addbtn').on('click', function(e) {
             purchasePrice: response.purchasePrice,
             purchaseAmount: parseInt(response.purchaseAmount),
             exchange: response.exchange});
-        console.log(global_stockarray);
         clearInterval(stockLoop);
         clearInterval(run);
         clearInterval(run2);
@@ -140,7 +146,6 @@ function addUser(event) {
         dataType: 'JSON',
         contentType: 'application/json; charset=UTF-8'
     }).done(function(response) {
-        console.log(response);
         global_ID = response.id;
         global_cash = response.cash;
         global_username = response.username;
@@ -239,11 +244,11 @@ function mainLoop() {
             dolReturn += parseFloat(response[i].returnDol);
             var row = $('<div></div>').text(response[i].company).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $('#companyname').append(row);
-            var row2 = $('<div></div>').text(response[i].price).addClass('row entry').attr('data-ticker',response[i].stockTicker);
+            var row2 = $('<div></div>').text('$'+response[i].price).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#price").append(row2);
             var row3 = $('<div></div>').text(response[i].shares).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#shares").append(row3);
-            var row4 = $('<div></div>').text(response[i].positionVal.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
+            var row4 = $('<div></div>').text('$'+response[i].positionVal.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#positionVal").append(row4);
             var row5 = $('<div></div>').text(response[i].returnDol.toFixed(2)+' / '+response[i].returnPercent.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#returnPer").append(row5);
@@ -258,8 +263,8 @@ function mainLoop() {
             var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#200day").append(row10);
         }
-        $('#portfoliovalue').text("Value: ").append($('<small></small>').text(sum.toFixed(2)));
-        $('#portfolioreturn').text("Return: ").append($('<small></small>').text(dolReturn.toFixed(2)));
+        $('#portfoliovalue').text("Value: ").append($('<small></small>').text('$'+sum.toFixed(2)));
+        $('#portfolioreturn').text("Return: ").append($('<small></small>').text('$'+dolReturn.toFixed(2)));
         if (runCount2 == 0){
             mainGraph();
         }
@@ -382,10 +387,12 @@ function indexGraph(selected){
         contentType: 'application/json; charset=UTF-8',
         url: '/stocks'
     }).done(function(response) {
+        $('#graph-label').empty();
         var ctxGSPC = document.getElementById("myGSPCChart");
         var labels = [];
         var data = [];
         if (selected == 'GSPC' || selected == 'start'){
+            $('#graph-label').text('S&P 500');
             if (selected != 'start'){
                 frontGraph.destroy();
             }
@@ -396,6 +403,7 @@ function indexGraph(selected){
             frontGraph = makeGraph(labels,data,ctxGSPC);
         }
         else if (selected == 'DJI'){
+            $('#graph-label').text('Dow Jones Industrial');
             frontGraph.destroy();
             for (var i = 0;i<response.DJI.length; i++){
                 labels.push(response.DJI[i].date);
@@ -404,6 +412,7 @@ function indexGraph(selected){
             frontGraph = makeGraph(labels,data,ctxGSPC);
         }
         else if (selected =='IXIC'){
+            $('#graph-label').text('Nasdaq');
             frontGraph.destroy();
             for (var i = 0;i<response.IXIC.length; i++){
                 labels.push(response.IXIC[i].date);
@@ -413,6 +422,7 @@ function indexGraph(selected){
         }
 
         else if (selected =='TNX'){
+            $('#graph-label').text('10-year Treasury');
             frontGraph.destroy();
             for (var i = 0;i<response.TNX.length; i++){
                 labels.push(response.TNX[i].date);
@@ -421,6 +431,7 @@ function indexGraph(selected){
             frontGraph = makeGraph(labels,data,ctxGSPC);
         }
         else if (selected =='GLD'){
+            $('#graph-label').text('Gold');
             frontGraph.destroy();
             for (var i = 0;i<response.GLD.length; i++){
                 labels.push(response.GLD[i].date);
@@ -432,6 +443,7 @@ function indexGraph(selected){
 }
 
 function makeGraph(labels, data,ctx){
+    data.reverse();
     var backgroundColor = [];
     var borderColor = [];
     for (var i = labels.length;i>0;i--){

@@ -153,7 +153,7 @@ router.get('/:ticker', function(req, res, next) {
             industry: "",
             exchange: exchange,
             daysRange: response.DaysRange,
-            marketCap: response.marketCapitalization,
+            marketCap: response.MarketCapitalization,
             movAvg200 : response.TwoHundreddayMovingAverage,
             weekLow52: response.YearLow,
             weekHigh52: response.YearHigh,
@@ -289,7 +289,7 @@ router.get('/', function(req, res, next) {
             if (response[i].Symbol == '%5eTNX'){
                 historicalTNX.push({price: response[i].Close, date:response[i].Date});
             }
-            if (response[i].Symbol == '%GLD'){
+            if (response[i].Symbol == 'GLD'){
                 historicalGLD.push({price: response[i].Close, date:response[i].Date});
             }
         }
