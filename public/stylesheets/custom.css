@@ -4,7 +4,9 @@
     height: 35px;
 
     background-color: #2c3e50;
+
     border-bottom-style: solid;
+    border-bottom-color: black;
 
     margin-top: 7px;
     margin: 0 auto;
@@ -61,14 +63,17 @@ h4 {
     height: 100%;
 }
 
+#keystats li {
+    list-style-type: none;
+}
 
 #stocks {
-    text-decoration: underline;
     width: 100%;
 }
 #stocksbackground{
     width: 100%;
     background-color: #778899;
+
 }
 #stocksheader {
     width: 100%;
@@ -77,9 +82,12 @@ h4 {
     text-decoration: underline;
     text-align: center;
 
+    background-color: #2c3e50;
+
     padding-bottom: 10px;
 
-    border-bottom-style: dashed;
+    border-bottom-style: solid;
+    border-bottom-color: black;
 }
 #stocksview {
     width: 100%;
@@ -87,24 +95,13 @@ h4 {
     text-align: center;
     margin: 0 auto;
 }
-
 #stocksview h5 {
     color: blue;
 }
 
+
 .col-md-1#companyname h5 {
-    font-weight: bold; 
-}
-
-.col-md-2#searchheader {
-    margin-top: 0px;
-    
-}
-
-.col-md-2#searchheader h3 {
-    border: solid;
-    vertical-align: middle;
-    text-align: center;
+    font-weight: bold;
 }
 
 .row#searchbar {
@@ -151,7 +148,7 @@ h4 {
 }
 
 #searchinput {
-    width: 93%;
+    width: 95%;
 }
 #searchbtn {
     float: right;
@@ -169,7 +166,7 @@ h4 {
 }
 #searchmodal {
     margin: 0 auto;
-    height: 95%;
+    height: 100%;
     width: 85%;
     z-index:1000;
     background: white;
@@ -182,8 +179,6 @@ h4 {
 #name {
     height: 70px;
 
-    display: table-cell;
-    vertical-align: bottom;
 }
 #ticker {
     height: 70px;
@@ -193,12 +188,14 @@ h4 {
     align-items: flex-end;
 }
 #exchangeimg {
-    float: right;
+    height: 100%;
+
 }
 
 #search-statlineheader {
     width: 100%;
     margin: 0 auto;
+    text-align: center;
 }
 #search-statlinehearder.row {
     border-bottom-style: solid;
@@ -222,12 +219,11 @@ h4 {
 }
 #search-input {
     width: 100%;
-    height: 20%;
-
+    height: 10%;
 }
 
-#search-input input {
-
+#closebtn {
+    margin-right: 15px;
 }
 
 
@@ -235,14 +231,8 @@ h4 {
 
 #addbtn {
     text-align:center;
-    padding-top: 15px;
-    float: right;
 }
 
-#statline.row{
-    padding-bottom: 5px;
-    border-bottom: thin;
-}
 
 input {
     color: #2F4F4F;
