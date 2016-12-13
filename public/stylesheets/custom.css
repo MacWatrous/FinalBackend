@@ -22,6 +22,7 @@
 }
 #welcomebar-logout button{
     color: black;
+    border-radius:
 }
 
 h1 small {
@@ -51,27 +52,53 @@ h4 {
 }
 
 .container-fluid {
-    margin-left: 15px;
+    margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
     
     padding-left: 0px;
+    padding-right: 0px;
 }
+
+
+
 
 #keystats {
     height: 100%;
 }
-
+#keystats h2 {
+    color: #e1a701;
+}
 #keystats li {
     list-style-type: none;
+    font-size: 125%;
+    background-color: lightslategrey;
+    text-align: center;
+    color: #e1a701;
 }
+#keystats  small {
+    color: white;
+}
+
+#piechartcontainer {
+    width: 175px;
+    height: 175px;
+}
+#graphcontainer {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
 
 #stocks {
     width: 100%;
+    color: #e1a701;
+    padding-right: 0;
 }
 #stocksbackground{
     width: 100%;
+    height: 100%;
     background-color: #778899;
 
 }
@@ -91,12 +118,16 @@ h4 {
 }
 #stocksview {
     width: 100%;
-    position: relative;
+    height: 100%;
+
     text-align: center;
     margin: 0 auto;
 }
 #stocksview h5 {
-    color: blue;
+    color: white;
+}
+#stocksview.row div.row {
+    padding-bottom: 5px;
 }
 
 
@@ -174,7 +205,7 @@ h4 {
 }
 #search-header{
     width: 100%;
-    height: 15%;
+    height: 17%;
     margin: 0px;
 
     border-bottom-style: solid;
@@ -212,6 +243,16 @@ h4 {
 #exchangeimg img {
     margin: 0;
 }
+#close {
+    width: 100%;
+    height: 1%;
+    padding-right: 0px;
+}
+#closebtn {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0;
+}
 
 #search-statlineheader {
     width: 100%;
@@ -223,7 +264,6 @@ h4 {
 }
 #search-statlineheader h5 {
     width: 125%;
-
 
     font-size: 90%;
     font-weight: bold;
@@ -242,13 +282,6 @@ h4 {
     width: 100%;
     height: 10%;
 }
-#closebtn {
-    margin-right: 15px;
-}
-
-
-
-
 #addbtn {
     text-align:center;
 }
@@ -259,6 +292,7 @@ input {
 }
 
 body {
+    width: 100%;
     color: white;
     background-color: #34495e;
 }

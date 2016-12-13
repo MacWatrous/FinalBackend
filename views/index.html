@@ -40,7 +40,9 @@
     <div id="search_overlay">
         <div id="searchmodal">
 
-
+            <div class="row" id="close">
+                <button class="pull-right" id="closebtn">Close</button>
+            </div>
             <div class="row" id="search-header">
                 <div class="col-md-3" id="name"> <!-- This column will have Company name -->
                     <h1>Yahoo</h1>
@@ -51,9 +53,7 @@
                 <div class="col-md-6" id="exchangeimg"> <!-- This column will have Exchange img. -->
                     <span style="background-color:white;"></span>
                 </div>
-                <div class="col-md-1">
-                    <button class="pull-right" id="closebtn">Close</button>
-                </div>
+
 
             </div>
 
@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label>Total Cost:</label> <span id="totalcost"></span>
+                    <label>Total Cost:</label> <span id="totalcost">100000</span>
                 </div>
 
                 <div class="col-md-3" id="addbtn">
@@ -151,21 +151,14 @@
     <div class="row" id="keystats">
         <div class="col-xs-9">
             <h2>Statistics</h2>
-            <div class="col-xs-2">
+            <div class="col-xs-4">
                 <ul>
                     <li>Value:
                         <small>$200</small>
                     </li>
                 </ul>
             </div>
-            <div class="col-xs-2">
-                <ul>
-                    <li>Cash:
-                        <small>$100</small>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <ul>
                     <li>Return:
                         <small>$2 (6%)</small>
@@ -173,12 +166,12 @@
                 </ul>
             </div>
         </div>
-        <div class="col-xs-2 rightspan ">
+        <div class="col-xs-2 rightspan " id="piechartcontainer">
             <canvas id="myChartPie" width="150" height="150" style="margin-top:20px;"></canvas>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="graphcontainer">
         <canvas id="myGSPCChart" width="100%" height="15%" style="margin-top:20px;"></canvas>
     </div>
 
@@ -205,7 +198,7 @@
                 <h4>Position Value</h4>
             </div>
             <div class="col-lg-1">
-                <h4>Return ($ / %)</h4>
+                <h4>Return<br>($ / %)</h4>
             </div>
             <div class="col-lg-1">
                 <h4>Dividend Yield</h4>
