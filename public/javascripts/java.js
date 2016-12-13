@@ -12,6 +12,7 @@ var run;
 var run2;
 var mainTable;
 var exchange;
+var frontGraph;
 
 function startTime() {
     var today = new Date();
@@ -100,7 +101,7 @@ $('#addbtn').on('click', function(e) {
         mainLoop();
         run = setInterval(mainLoop, 10000);
         googleLoop();
-        run2 = setInterval(googleLoop, 100000)
+        run2 = setInterval(googleLoop, 100000);
         $('#overlayhider').hide();
     });
 });
@@ -136,7 +137,7 @@ function addUser(event) {
             id: ''+global_ID,
             stocks: array
         };
-        indexGraph();
+        indexGraph('start');
     });
 }
 
@@ -167,7 +168,7 @@ function findUser(event) {
         }).done(function (response2) {
             global_stockarray = response2;
             console.log(global_stockarray);
-            indexGraph();
+            indexGraph('start');
             mainLoop();
             run = setInterval(mainLoop, 10000);
             googleLoop();
@@ -197,7 +198,11 @@ function mainLoop() {
         $("#eps").empty();
         $("#200day").empty();
         console.log(response);
+        var sum = 0;
+        var dolReturn = 0;
         for (var i = 0; i<response.length;i++){
+            sum += response[i].positionVal;
+            dolReturn += response[i].returnDol;
             var row = $('<div></div>').text(response[i].company).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $('#companyname').append(row);
             var row2 = $('<div></div>').text(response[i].price).addClass('row entry').attr('data-ticker',response[i].stockTicker);
@@ -206,7 +211,7 @@ function mainLoop() {
             $("#shares").append(row3);
             var row4 = $('<div></div>').text(response[i].positionVal.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#positionVal").append(row4);
-            var row5 = $('<div></div>').text(response[i].returnPercent.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
+            var row5 = $('<div></div>').text(response[i].returnDol.toFixed(2)+' / '+response[i].returnPercent.toFixed(2)).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#returnPer").append(row5);
             var row6 = $('<div></div>').text(response[i].dividendYield).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#dividendYield").append(row6);
@@ -219,6 +224,8 @@ function mainLoop() {
             var row10 = $('<div></div>').text(response[i].movAvg200).addClass('row entry').attr('data-ticker',response[i].stockTicker);
             $("#200day").append(row10);
         }
+        $('#portfoliovalue').append($('<small></small>').text(sum.toFixed(2)));
+        $('#portfolioreturn').append($('<small></small>').text(dolReturn.toFixed(2)));
         if (runCount2 == 0){
             mainGraph();
         }
@@ -266,7 +273,7 @@ function googleLoop() {
 
 
 
-function indexGraph(){
+function indexGraph(selected){
     $.ajax({
         method: 'GET',
         dataType: 'JSON',
@@ -274,45 +281,51 @@ function indexGraph(){
         url: '/stocks'
     }).done(function(response) {
         var ctxGSPC = document.getElementById("myGSPCChart");
-        var ctxDJI = document.getElementById("myDJIChart");
-        var ctxIXIC = document.getElementById("myIXICChart");
-        var ctxTNX = document.getElementById("myTNXChart");
-        var ctxGLD = document.getElementById("myGLDChart");
         var labels = [];
         var data = [];
-        for (var i = 0;i<response.GSPC.length; i++){
-            labels.push(response.GSPC[i].date);
-            data.push(response.GSPC[i].price);
+        if (selected == 'GSPC' || selected == 'start'){
+            if (selected != 'start'){
+                frontGraph.destroy();
+            }
+            for (var i = 0;i<response.GSPC.length; i++){
+                labels.push(response.GSPC[i].date);
+                data.push(response.GSPC[i].price);
+            }
+            frontGraph = makeGraph(labels,data,ctxGSPC);
         }
-        makeGraph(labels,data,ctxGSPC);
-        labels = [];
-        data = [];
-        for (var i = 0;i<response.DJI.length; i++){
-            labels.push(response.DJI[i].date);
-            data.push(response.DJI[i].price);
+        else if (selected == 'DJI'){
+            frontGraph.destroy();
+            for (var i = 0;i<response.DJI.length; i++){
+                labels.push(response.DJI[i].date);
+                data.push(response.DJI[i].price);
+            }
+            frontGraph = makeGraph(labels,data,ctxGSPC);
         }
-        makeGraph(labels,data,ctxDJI);
-        labels = [];
-        data = [];
-        for (var i = 0;i<response.IXIC.length; i++){
-            labels.push(response.IXIC[i].date);
-            data.push(response.IXIC[i].price);
+        else if (selected =='IXIC'){
+            frontGraph.destroy();
+            for (var i = 0;i<response.IXIC.length; i++){
+                labels.push(response.IXIC[i].date);
+                data.push(response.IXIC[i].price);
+            }
+            frontGraph = makeGraph(labels,data,ctxGSPC);
         }
-        makeGraph(labels,data,ctxIXIC);
-        labels = [];
-        data = [];
-        for (var i = 0;i<response.TNX.length; i++){
-            labels.push(response.TNX[i].date);
-            data.push(response.TNX[i].price);
+
+        else if (selected =='TNX'){
+            frontGraph.destroy();
+            for (var i = 0;i<response.TNX.length; i++){
+                labels.push(response.TNX[i].date);
+                data.push(response.TNX[i].price);
+            }
+            frontGraph = makeGraph(labels,data,ctxGSPC);
         }
-        makeGraph(labels,data,ctxTNX);
-        labels = [];
-        data = [];
-        for (var i = 0;i<response.GLD.length; i++){
-            labels.push(response.GLD[i].date);
-            data.push(response.GLD[i].price);
+        else if (selected =='GLD'){
+            frontGraph.destroy();
+            for (var i = 0;i<response.GLD.length; i++){
+                labels.push(response.GLD[i].date);
+                data.push(response.GLD[i].price);
+            }
+            frontGraph = makeGraph(labels,data,ctxGSPC);
         }
-        makeGraph(labels,data,ctxGLD);
     });
 }
 
@@ -335,7 +348,7 @@ function graphLoop(stock) {
     });
 }
 
-function makeGraph(labels, data,ctx){
+function makeGraph(labels, data,ctx, destroy){
     var backgroundColor = [];
     var borderColor = [];
     for (var i = labels.length;i>0;i--){
@@ -373,6 +386,7 @@ function makeGraph(labels, data,ctx){
             }
         }
     });
+    return myChart;
 }
 
 function getRandomColor() {
@@ -490,4 +504,8 @@ function overlayLoop(){
         $("#change").append($('<p></p>').text(response.yearHighChange));
         $("#userprice").attr('placeholder','$'+response.price);
     });
+}
+
+function loadSP(){
+
 }
