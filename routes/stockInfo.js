@@ -148,9 +148,8 @@ router.get('/:ticker', function(req, res, next) {
             response = response.query.results.quote;
             var historical = [];
             for (var i =0;i<response.length;i++){
-                historical.push(response[i].Close);
+                historical.push({price: response[i].Close, date:response[i].Date});
             }
-            historical.push
             stock.historical = historical;
             res.json(stock);
         });
